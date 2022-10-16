@@ -1,0 +1,38 @@
+@contentType = application/json
+@baseUrl = http://localhost:3000/user-type
+
+###
+
+# @name getAll
+GET {{baseUrl}}
+Content-Type:  {{contentType}}
+
+
+###
+
+# @name getByType
+GET {{baseUrl}}/OA
+Content-Type:  {{contentType}}
+
+###
+
+# @name createUserType
+POST {{baseUrl}}
+Content-Type:  {{contentType}}
+
+{
+    "rank": 100,
+    "type": "TEST_TYPE"
+}
+
+###
+
+# @name updateUserType
+PUT {{baseUrl}}/TEST_TYPE
+Content-Type:  {{contentType}}
+
+{
+    "rank": 120
+}
+
+###

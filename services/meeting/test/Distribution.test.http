@@ -1,0 +1,45 @@
+@contentType = application/json
+@baseUrl = http://localhost:3000/dist
+
+###
+
+# @name getByName
+GET {{baseUrl}}/name/dist_01
+Content-Type:  {{contentType}}
+
+
+###
+
+# @name create
+POST {{baseUrl}}
+Content-Type:  {{contentType}}
+
+{
+    "name": "test_dist_01",
+    "detail" : [{"UserId":1, "share": 97},{"UserId":2, "share": 30}],
+      "assignMode": "PREVIOUS_USER",
+      "assignBy": "OS_BAL",
+      "cifGrouping": true
+}
+
+###
+
+# @name getAll
+GET {{baseUrl}}/all
+Content-Type:  {{contentType}}
+
+###
+
+# @name getByName
+GET {{baseUrl}}/dist_01
+Content-Type:  {{contentType}}
+
+###
+
+###
+
+# @name delete
+DELETE {{baseUrl}}/test_dist_01
+Content-Type:  {{contentType}}
+
+###

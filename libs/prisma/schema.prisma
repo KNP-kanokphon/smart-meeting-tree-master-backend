@@ -1,0 +1,45 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
+  binaryTargets   = ["native"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model meetings {
+  id           Int      @id @default(autoincrement())
+  title        String   @db.VarChar(255)
+  room         String   @db.VarChar(255)
+  floor        String   @db.VarChar(255)
+  building     String   @db.VarChar(255)
+  meetingplace String   @db.VarChar(255)
+  day          DateTime @db.Date
+  starttime    String   @db.VarChar(255)
+  endtime      String   @db.VarChar(255)
+  uuid         String   @db.VarChar(255)
+  detail       String   @db.Text
+}
+
+model user {
+  id       Int     @id @default(autoincrement())
+  username String? @db.VarChar(100)
+  password String  @db.VarChar(100)
+  type     String  @db.VarChar(10)
+  level    String  @db.VarChar(50)
+  uuid     String  @db.VarChar(100)
+}
+
+model userattendees {
+  id        Int     @id @default(autoincrement())
+  username  String  @db.VarChar(255)
+  phone     String  @db.VarChar(255)
+  email     String  @db.VarChar(255)
+  model     String? @db.VarChar(255)
+  position  String? @db.VarChar(255)
+  uuid      String  @db.VarChar(100)
+  idmeeting String  @db.VarChar(100)
+  checkin   Boolean @db.Boolean
+}

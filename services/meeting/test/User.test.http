@@ -1,0 +1,48 @@
+@contentType = application/json
+@baseUrl = http://localhost:3000/user
+
+###
+
+# @name getAll
+GET {{baseUrl}}
+Content-Type:  {{contentType}}
+
+
+###
+
+# @name getById
+GET {{baseUrl}}/2
+Content-Type:  {{contentType}}
+
+###
+
+# @name createUser
+POST {{baseUrl}}
+Content-Type:  {{contentType}}
+
+{
+    "id": 21,
+    "capabilities" : {"value": 100},
+    "type": "AGENT",
+    "parentId":2,
+    "name": "agent"
+}
+
+###
+
+# @name deleteUser
+DELETE {{baseUrl}}/21
+Content-Type:  {{contentType}}
+
+###
+
+# @name updateUser
+PUT {{baseUrl}}/2
+Content-Type:  {{contentType}}
+
+{
+    "capabilities" : {"value": 1},
+    "type": "AGENT"
+}
+
+###

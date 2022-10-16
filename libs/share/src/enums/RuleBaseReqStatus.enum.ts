@@ -1,0 +1,6 @@
+export enum RuleBaseSeqStatus {
+  DRAFT = 'DRAFT',
+  WAITING_APPROVAL = 'WAITING_APPROVAL',
+  APPROVED = 'APPROVED',
+  DISABLED = 'DISABLED',
+}

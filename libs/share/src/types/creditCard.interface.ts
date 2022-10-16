@@ -1,0 +1,64 @@
+import { TFormatAllKeyToCustomType } from '../utils/utilTypes';
+
+type TRawCsvData<T, U extends keyof T> = Pick<T, U> &
+  TFormatAllKeyToCustomType<Omit<T, U>, string>;
+
+type CARD = {
+  CHANNEL_TYPE: 'Card Link';
+  DATA_DATE: string;
+  CIF: string;
+  CUS_NO: string;
+  ACC_NO: string;
+  CARD_NO: string;
+  CARD_TYPE: string;
+  CARD_CATEGORY: string;
+  BILL_CYCLE: number;
+  CYCLE_DUE: number;
+  BLOCK_CODE: string;
+  DUE_DATE: string;
+  CR_LIMIT: number;
+  STMT_AMT: number;
+  CUR_BAL: number;
+  PRINCIPAL_AMT: number;
+  INT_AMT: number;
+  FEE_AMT: number;
+  TOTAL_DUE: number;
+  MIN_PAY_AMT: number;
+  DPD: number;
+  LAST_PYMT_DATE: string;
+  LAST_PYMT_AMT: string;
+  ACC_FLAG: string;
+  NPL_DATE: string;
+  WO_DATE: string;
+  START_DATE: string;
+  FINISH_DATE: string;
+  SMS_DATE: string;
+  TITLE: string;
+  F_NAME: string;
+  L_NAME: string;
+  BIRTH_DATE: string;
+  GENDER: string;
+  OCCUPATION: string;
+  CITIZEN_ID: number;
+  HOME_PHONE: string;
+  OFFICE_PHONE: string;
+  MOBILE_PHONE: string;
+  ADDR_1: string;
+  ADDR_2: string;
+  ADDR_3: string;
+  AMPHUR: string;
+  PROVINCE: string;
+  ZIPCODE: number;
+  OWNER_BR: string;
+  STAFF_FLG: string;
+  PROV_FLG: string;
+  PAST_DUE: number;
+  DELQ_30: number;
+  DELQ_60: number;
+  CUR_DUE: number;
+  CUR_TOT_AMT_DUE: number;
+  PAID_AMT: number;
+  INT_ACCRUED: number;
+};
+
+export type TDebtCardRaw = TRawCsvData<CARD, 'CHANNEL_TYPE'>;

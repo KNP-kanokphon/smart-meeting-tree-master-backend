@@ -1,0 +1,27 @@
+@contentType = application/json
+@baseUrl = http://localhost:3000/debt
+
+
+# @name pullback
+POST {{baseUrl}}/pullback
+Content-Type:  {{contentType}}
+
+###
+
+# @name simulate
+POST {{baseUrl}}/simulate
+Content-Type:  {{contentType}}
+
+{
+  "userId": 0
+}
+###
+
+# @name submit
+POST {{baseUrl}}/submit
+Content-Type:  {{contentType}}
+
+{
+  "userId": 0
+}
+###

@@ -1,0 +1,12 @@
+{
+    "extends": "./tsconfig.json",
+    "exclude": [
+        "node_modules/**/*",
+        ".serverless/**/*",
+        "_warmup/**/*",
+        ".vscode/**/*",
+        "test",
+        "dist",
+        "**/*spec.ts"
+    ]
+}

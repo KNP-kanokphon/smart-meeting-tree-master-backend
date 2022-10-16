@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: d_debt_local
+
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    command: [ 'redis-server' ]

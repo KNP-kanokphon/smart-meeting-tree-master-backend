@@ -1,0 +1,19 @@
+.git
+.gitignore
+
+# package directories
+node_modules
+jspm_packages
+dist
+
+.webpack
+# Compiled files
+**/.terraform/*
+**/.terragrunt-cache/*
+*.tfstate
+*.tfstate.*
+
+# Module directory
+.terraform
+**/.idea
+**/*.iml

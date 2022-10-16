@@ -1,0 +1,86 @@
+@contentType = application/json
+@baseUrl = http://localhost:3000/rule-base
+
+###
+
+# @name getByName
+GET {{baseUrl}}/AssignUser
+Content-Type:  {{contentType}}
+
+
+###
+
+# @name create
+POST {{baseUrl}}
+Content-Type:  {{contentType}}
+
+{
+    "name": "User:28:AssignUser",
+    "detail" : [
+        {"seq": 1, "type": "ADVANCE","distribution": "oper_dist_19", "expression": "provcat >= 2.5", "days": 30, "status": "APPROVED"},
+        {
+            "seq": 2,
+            "type": "BASIC",
+            "fields" : {
+                "provice" : {"op":"in", "value" : ["Bangkok", "ChiangMai"] , "type": "STRING"} ,
+                "amount" : {"op":">", "value" : 20000, "type": "NUMBER"}
+            },
+            "distribution":"dist_01",
+            "days": 30,
+            "status": "APPROVED"
+        }
+    ]
+}
+
+###
+
+# @name getAll
+GET {{baseUrl}}
+Content-Type:  {{contentType}}
+
+###
+
+# @name getByName
+GET {{baseUrl}}/User:20:AssignUser
+Content-Type:  {{contentType}}
+
+###
+
+# @name deleteRule
+DELETE  {{baseUrl}}/User:20:AssignUser
+Content-Type:  {{contentType}}
+
+###
+
+# @name updateRule
+PUT {{baseUrl}}/AssignUser
+Content-Type:  {{contentType}}
+
+{
+    "detail" : [{"seq": 1, "days": 20, "type": "ADVANCE", "status": "APPROVED", "listname": "Credit Non-NPL", "createDate": "2022-06-28 14:13:19", "expression":"overdueAmt > 100 and channel in ['LOAN'] and productCode in ['20002','30001'] and accountLevel in ['P0','P1','SM2','SM3'] and accountStatus in ['Non-Npls']", "description": "List ของ Credit card Non-NPL", "distribution": "dist_01"}, {"seq": 2, "days": 20, "type": "ADVANCE", "status": "APPROVED", "listname": "สินเชื่อทั่วไป Non NPL", "createDate": "2022-06-28 14:29:18", "expression": "overdueAmt > 100 and channel in ['LOAN'] and productCode in ['20002','30001'] and accountStatus in ['Npls']", "description": "List ของ Credit card NPL", "distribution": "dist_02"}]
+}
+
+###
+
+
+# @name updateRuleBaseSeqStatus
+PUT {{baseUrl}}/seq-status/User:20:AssignUser
+Content-Type:  {{contentType}}
+
+{
+    "seq": 1,
+    "status": "DISABLED"
+}
+
+###
+
+
+# @name execute
+POST {{baseUrl}}/execute
+Content-Type:  {{contentType}}
+
+{
+  "userId": 0
+}
+
+###

@@ -1,0 +1,4 @@
+export default {
+  PLATFORM_ALREADY_EXIST: -10000,
+  PLATFORM_DOES_NOT_EXIST: -10001,
+};

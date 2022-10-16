@@ -1,0 +1,54 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": [
+      "./tsconfig.json",
+      //   "./libs/**/tsconfig.json",
+      "./services/**/tsconfig.json"
+    ],
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint/eslint-plugin"],
+  "extends": [
+    "prettier",
+    "plugin:prettier/recommended",
+    "airbnb-typescript/base"
+  ],
+  "ignorePatterns": ["**/*.spec.ts"],
+  "rules": {
+    "quotes": "off",
+    "@typescript-eslint/quotes": "off",
+    "@typescript-eslint/no-floating-promises": "error",
+    "import/prefer-default-export": "off",
+    "no-console": "off",
+    "arrow-parens": "off",
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
+    "object-curly-newline": "off",
+    "import/no-extraneous-dependencies": "off",
+    "implicit-arrow-linebreak": "off",
+    "no-param-reassign": [
+      "error",
+      {
+        "props": false
+      }
+    ],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "operator-linebreak": "off",
+    "prefer-destructuring": "off",
+    "@typescript-eslint/naming-convention": "off",
+    "no-restricted-syntax": "off",
+    "no-await-in-loop": "off",
+    "no-continue": "off",
+    "no-return-await": "off",
+    "@typescript-eslint/return-await": "off",
+    "function-paren-newline": "off",
+    "class-methods-use-this": "off",
+    "import/extensions": "off"
+  }
+}
