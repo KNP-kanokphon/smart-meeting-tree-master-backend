@@ -10,17 +10,18 @@ datasource db {
 }
 
 model meetings {
-  id           Int      @id @default(autoincrement())
-  title        String   @db.VarChar(255)
-  room         String   @db.VarChar(255)
-  floor        String   @db.VarChar(255)
-  building     String   @db.VarChar(255)
-  meetingplace String   @db.VarChar(255)
-  day          DateTime @db.Date
-  starttime    String   @db.VarChar(255)
-  endtime      String   @db.VarChar(255)
-  uuid         String   @db.VarChar(255)
-  detail       String   @db.Text
+  id           Int     @id @default(autoincrement())
+  title        String  @db.VarChar(255)
+  room         String  @db.VarChar(255)
+  floor        String  @db.VarChar(255)
+  building     String  @db.VarChar(255)
+  meetingplace String  @db.VarChar(255)
+  day          String  @db.VarChar(255)
+  starttime    String  @db.VarChar(255)
+  endtime      String  @db.VarChar(255)
+  uuid         String  @db.VarChar(255)
+  detail       String  @db.Text
+  snack        Boolean @db.Boolean
 }
 
 model user {
