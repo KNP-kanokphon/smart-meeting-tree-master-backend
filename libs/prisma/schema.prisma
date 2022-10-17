@@ -44,3 +44,10 @@ model userattendees {
   idmeeting String  @db.VarChar(100)
   checkin   Boolean @db.Boolean
 }
+
+model file {
+  id        Int    @id @default(autoincrement())
+  idmeeting String @db.VarChar(255)
+  namefile  String @db.VarChar(255)
+  pathfile  String @db.VarChar(255)
+}

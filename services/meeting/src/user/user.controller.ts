@@ -53,6 +53,11 @@ export class UserattendController {
   ) {
     return this.userattendeesService.findbyid(roomid, userid);
   }
+  @Get(':roomid')
+  async findUserInroom(@Param('roomid') roomid: string) {
+    return this.userattendeesService.findUserInroom(roomid);
+  }
+
   @Put()
   async update(
     @Body('roomid') roomid: string,

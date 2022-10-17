@@ -39,4 +39,7 @@ export class UserattendeesService {
   async update(roomid: string, userid: string, status: boolean) {
     return await this.userattendeesRepo.update(roomid, userid, status);
   }
+  async findUserInroom(roomid: string) {
+    return await this.userattendeesRepo.findUserInroom(roomid);
+  }
 }

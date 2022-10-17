@@ -55,4 +55,12 @@ export class UserattendeesRepository {
       },
     });
   }
+  async findUserInroom(roomid: string, option?: { prisma?: TQueryClient }) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.userattendees.findMany({
+      where: {
+        idmeeting: roomid,
+      },
+    });
+  }
 }
