@@ -3,6 +3,7 @@ import {
   AppError,
   UserRepository,
   UserattendeesRepository,
+  ListnameRepository,
 } from '@d-debt/share';
 import { Prisma } from '@prisma/client';
 
@@ -22,7 +23,11 @@ export class UserService {
 }
 @Injectable()
 export class UserattendeesService {
-  constructor(private userattendeesRepo: UserattendeesRepository) {}
+  constructor(
+    private userattendeesRepo: UserattendeesRepository,
+    private userRepo: UserRepository,
+    private listnameRepo: ListnameRepository,
+  ) {}
 
   findAll() {
     return this.userRepo.findAll();
@@ -41,5 +46,13 @@ export class UserattendeesService {
   }
   async findUserInroom(roomid: string) {
     return await this.userattendeesRepo.findUserInroom(roomid);
+  }
+  async importUser(data: Prisma.listnameCreateManyInput) {
+    return await this.listnameRepo.createMany(data);
+  }
+  async getuserAll() {
+    console.log(await this.listnameRepo.getuserAll());
+
+    return await this.listnameRepo.getuserAll();
   }
 }

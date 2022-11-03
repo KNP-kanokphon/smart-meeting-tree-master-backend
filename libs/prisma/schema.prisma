@@ -33,11 +33,46 @@ model user {
   uuid     String  @db.VarChar(100)
 }
 
+model listname {
+  id          Int     @id @default(autoincrement())
+  uuid        String  @db.VarChar(250)
+  username    String  @db.VarChar(250)
+  phone       String? @db.VarChar(250)
+  type        String  @db.VarChar(20)
+  course      String? @db.VarChar(250)
+  position    String? @db.VarChar(250)
+  positionkpi String? @db.VarChar(250)
+}
+
+model course {
+  id         Int     @id @default(autoincrement())
+  uuid       String  @db.VarChar(100)
+  username   String  @db.VarChar(100)
+  createdate String? @db.VarChar(20)
+  updatedate String? @db.VarChar(250)
+}
+
+model position {
+  id         Int     @id @default(autoincrement())
+  uuid       String  @db.VarChar(100)
+  username   String  @db.VarChar(100)
+  createdate String? @db.VarChar(20)
+  updatedate String? @db.VarChar(250)
+}
+
+model positionkpi {
+  id         Int     @id @default(autoincrement())
+  uuid       String  @db.VarChar(100)
+  username   String  @db.VarChar(100)
+  createdate String? @db.VarChar(20)
+  updatedate String? @db.VarChar(250)
+}
+
 model userattendees {
   id        Int     @id @default(autoincrement())
   username  String  @db.VarChar(255)
   phone     String  @db.VarChar(255)
-  email     String  @db.VarChar(255)
+  email     String? @db.VarChar(255)
   model     String? @db.VarChar(255)
   position  String? @db.VarChar(255)
   uuid      String  @db.VarChar(100)
