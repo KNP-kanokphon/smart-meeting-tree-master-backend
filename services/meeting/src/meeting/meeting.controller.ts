@@ -50,4 +50,8 @@ export class MeetingController {
     const path = await this.meetingService.getFilePdf(roomid);
     res.download(path[0].pathfile + path[0].namefile);
   }
+  @Post('agendes')
+  createAgendes(@Body() data: []) {
+    return this.meetingService.createAgendes(data);
+  }
 }

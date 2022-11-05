@@ -29,4 +29,5 @@ export class MeetingService {
   async getFilePdf(idmeeting: string) {
     return this.fileRepo.getFileByid(idmeeting);
   }
+  async createAgendes(data: any) {}
 }

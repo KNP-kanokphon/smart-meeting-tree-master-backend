@@ -80,6 +80,23 @@ model userattendees {
   checkin   Boolean @db.Boolean
 }
 
+model agendes {
+  id            Int     @id @default(autoincrement())
+  uuid          String? @db.VarChar(255)
+  agendes       String  @db.VarChar(255)
+  detailagendes String  @db.VarChar(255)
+  subject       String? @db.VarChar(255)
+  detailsubject String? @db.VarChar(255)
+  filepart      String? @db.VarChar(255)
+}
+
+model foodinmeeting {
+  id         Int     @id @default(autoincrement())
+  uuid       String? @db.VarChar(255)
+  type       String  @db.VarChar(255)
+  detailfood String  @db.VarChar(255)
+}
+
 model file {
   id        Int    @id @default(autoincrement())
   idmeeting String @db.VarChar(255)
