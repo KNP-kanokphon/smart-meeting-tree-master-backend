@@ -4,6 +4,7 @@ import {
   UserRepository,
   UserattendeesRepository,
   ListnameRepository,
+  FoodRepository,
 } from '@d-debt/share';
 import { Prisma } from '@prisma/client';
 
@@ -35,9 +36,33 @@ export class UserattendeesService {
   async create(data: Prisma.userattendeesCreateManyInput) {
     return this.userattendeesRepo.create(data);
   }
-  async createMany(data: Prisma.userattendeesCreateManyInput) {
-    return this.userattendeesRepo.createMany(data);
+
+  async createMany(data: any) {
+    const id = data['idmeeting'];
+    data['userBoard'].map((e) => {
+      const data = {
+        username: e.username,
+        uuidprofile: e.uuidprofile,
+        uuid: e.uuid,
+        idmeeting: id,
+        checkin: false,
+        type: 'userBoard',
+      };
+      this.userattendeesRepo.createMany(data);
+    });
+    data['userAttendee'].map((e) => {
+      const data = {
+        username: e.username,
+        uuidprofile: e.uuidprofile,
+        uuid: e.uuid,
+        idmeeting: id,
+        checkin: false,
+        type: 'userAttendee',
+      };
+      this.userattendeesRepo.createMany(data);
+    });
   }
+
   async findbyid(roomid: string, userid: string) {
     return await this.userattendeesRepo.findbyid(roomid, userid);
   }

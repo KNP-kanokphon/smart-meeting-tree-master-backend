@@ -37,7 +37,7 @@ export class UserController {
 export class UserattendController {
   constructor(private readonly userattendeesService: UserattendeesService) {}
   @Post()
-  create(@Body() data: Prisma.userattendeesCreateManyInput) {
+  create(@Body() data: any) {
     return this.userattendeesService.createMany(data);
   }
   @Post('byuser')

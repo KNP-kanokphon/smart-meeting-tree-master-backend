@@ -5,6 +5,9 @@ import { MeetingRepository } from '../../repositories/Meeting.repository';
 import { UserattendeesRepository } from '../../repositories/Userattendees.repository';
 import { FileRepository } from '../../repositories/file.repository';
 import { ListnameRepository } from '../../repositories/Listname.repository';
+import { AgendesRepository } from '../../repositories/Agendes.repository';
+import { DetailAgendesRepository } from '../../repositories/DetailAgendes.repository';
+import { FoodRepository } from '../../repositories/Foodinmeeting.repository';
 
 const services = [
   PrismaService,
@@ -13,6 +16,9 @@ const services = [
   UserattendeesRepository,
   FileRepository,
   ListnameRepository,
+  AgendesRepository,
+  DetailAgendesRepository,
+  FoodRepository,
 ];
 @Module({
   providers: [...services],
