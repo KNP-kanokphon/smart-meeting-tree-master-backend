@@ -24,6 +24,12 @@ export class MeetingService {
   async findAll() {
     return this.meetingRepo.findAll();
   }
+
+  async findAgendaByid(findAgendaByid: string) {
+    console.log(findAgendaByid);
+
+    return this.agendesRepo.findAgendaByid(findAgendaByid);
+  }
   async findByid(roomid: string) {
     return this.meetingRepo.findByid(roomid);
   }

@@ -34,7 +34,7 @@ export class UserattendeesRepository {
     return prisma.userattendees.findMany({
       where: {
         idmeeting: roomid,
-        uuid: userid,
+        uuidprofile: userid,
       },
     });
   }

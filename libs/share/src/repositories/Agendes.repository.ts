@@ -26,4 +26,12 @@ export class AgendesRepository {
     const prisma = option?.prisma ?? this.prisma;
     return prisma.agendes.create({ data });
   }
+  async findAgendaByid(roomid: string, option?: { prisma?: TQueryClient }) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.agendes.findMany({
+      where: {
+        uuid: roomid,
+      },
+    });
+  }
 }

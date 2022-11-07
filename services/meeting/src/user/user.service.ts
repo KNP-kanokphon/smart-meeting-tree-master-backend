@@ -76,8 +76,6 @@ export class UserattendeesService {
     return await this.listnameRepo.createMany(data);
   }
   async getuserAll() {
-    console.log(await this.listnameRepo.getuserAll());
-
     return await this.listnameRepo.getuserAll();
   }
 }

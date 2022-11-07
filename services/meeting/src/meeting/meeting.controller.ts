@@ -69,4 +69,8 @@ export class MeetingController {
   ) {
     return this.meetingService.saveagendafile(id, step, files);
   }
+  @Get('agenda/:roomid')
+  findAgendaByid(@Param('roomid') roomid: string) {
+    return this.meetingService.findAgendaByid(roomid);
+  }
 }
