@@ -33,6 +33,11 @@ export class UserattendeesService {
   findAll() {
     return this.userRepo.findAll();
   }
+
+  async updateUserbyID(data: any, userid: string) {
+    return await this.listnameRepo.updateUserbyID(data, userid);
+  }
+
   async create(data: Prisma.userattendeesCreateManyInput) {
     return this.userattendeesRepo.create(data);
   }
@@ -40,7 +45,7 @@ export class UserattendeesService {
   async createMany(data: any) {
     const id = data['idmeeting'];
     data['userBoard'].map((e) => {
-      const data = {
+      const data: any = {
         username: e.username,
         uuidprofile: e.uuidprofile,
         uuid: e.uuid,
@@ -51,7 +56,7 @@ export class UserattendeesService {
       this.userattendeesRepo.createMany(data);
     });
     data['userAttendee'].map((e) => {
-      const data = {
+      const data: any = {
         username: e.username,
         uuidprofile: e.uuidprofile,
         uuid: e.uuid,

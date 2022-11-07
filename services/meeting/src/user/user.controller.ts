@@ -79,6 +79,12 @@ export class UserattendController {
   async updateUser(@Body('data') data: Prisma.listnameCreateManyInput) {
     return this.userattendeesService.importUser(data);
   }
+
+  @Put('updateUserbyid/:userid')
+  updateUserbyID(@Body('data') data: any, @Body('userid') userid: string) {
+    return this.userattendeesService.updateUserbyID(data, userid);
+  }
+
   // @UseInterceptors(FileInterceptor('file'))
   // async uploadFile(@UploadedFile() file: Express.Multer.File) {
   //   console.log(file.buffer.toString('utf-8'));

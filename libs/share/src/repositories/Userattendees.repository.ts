@@ -34,7 +34,7 @@ export class UserattendeesRepository {
     return prisma.userattendees.findMany({
       where: {
         idmeeting: roomid,
-        uuidprofile: userid,
+        uuid: userid,
       },
     });
   }
@@ -63,4 +63,27 @@ export class UserattendeesRepository {
       },
     });
   }
+  // async updateUserbyID(
+  //   data: any,
+  //   userid: string,
+  //   option?: { prisma?: TQueryClient },
+  // ) {
+  //   const prisma = option?.prisma ?? this.prisma;
+  //   console.log(data);
+  //   // console.log(userid);
+
+  //   return prisma.userattendees.updateMany({
+  //     where: {
+  //       uuid: userid,
+  //     },
+  //     data: {
+  //       username: data,
+  //     },
+  //   });
+  //   // return prisma.userattendees.findMany({
+  //   //   where: {
+  //   //     idmeeting: roomid,
+  //   //   },
+  //   // });
+  // }
 }

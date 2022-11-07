@@ -29,4 +29,26 @@ export class ListnameRepository {
     const prisma = option?.prisma ?? this.prisma;
     return prisma.listname.findMany();
   }
+
+  async updateUserbyID(
+    data: any,
+    userid: string,
+    option?: { prisma?: TQueryClient },
+  ) {
+    const prisma = option?.prisma ?? this.prisma;
+
+    return prisma.listname.updateMany({
+      where: {
+        uuid: data.uuid,
+      },
+      data: {
+        username: data.username,
+        phone: data.phone,
+        type: data.type,
+        course: data.course,
+        position: data.position,
+        positionkpi: data.positionkpi,
+      },
+    });
+  }
 }
