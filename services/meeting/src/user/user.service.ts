@@ -1,13 +1,14 @@
-import { Injectable } from '@nestjs/common';
 import {
   AppError,
   UserRepository,
   UserattendeesRepository,
   ListnameRepository,
   FoodRepository,
+  PositionRepository,
 } from '@d-debt/share';
 import { Prisma } from '@prisma/client';
-
+import { Injectable } from '@nestjs/common';
+import { el } from 'date-fns/locale';
 // import { CreateUserDto } from './dto/create-user.dto';
 // import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -28,6 +29,7 @@ export class UserattendeesService {
     private userattendeesRepo: UserattendeesRepository,
     private userRepo: UserRepository,
     private listnameRepo: ListnameRepository,
+    private positionRepo: PositionRepository,
   ) {}
 
   findAll() {
@@ -87,5 +89,12 @@ export class UserattendeesService {
   }
   async updateStatusUser(idmeeting: string, iduser: string) {
     return this.userattendeesRepo.updateStatusUser(idmeeting, iduser);
+  }
+  async importPosition(data: any, filetype: string) {
+    if (filetype === '1') {
+      return await this.positionRepo.importPosition(data);
+    } else {
+      return await this.positionRepo.importcourse(data);
+    }
   }
 }

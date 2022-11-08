@@ -110,4 +110,12 @@ export class UserattendController {
   //   );
   //   return { result };
   // }
+  @Post('import/position/:filetype')
+  @Post('import/position/:filetype')
+  async importPosition(
+    @Body('data') data: any,
+    @Param('filetype') filetype: string,
+  ) {
+    return this.userattendeesService.importPosition(data, filetype);
+  }
 }

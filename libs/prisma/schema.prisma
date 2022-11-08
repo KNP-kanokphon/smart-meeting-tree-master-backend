@@ -43,19 +43,17 @@ model listname {
 }
 
 model course {
-  id         Int     @id @default(autoincrement())
-  uuid       String  @db.VarChar(100)
-  username   String  @db.VarChar(100)
-  createdate String? @db.VarChar(20)
-  updatedate String? @db.VarChar(250)
+  id         Int      @id @default(autoincrement())
+  uuid       String   @db.VarChar(100)
+  namecourse String   @db.VarChar(100)
+  createdate DateTime @db.Timestamptz(3)
 }
 
 model position {
-  id         Int     @id @default(autoincrement())
-  uuid       String  @db.VarChar(100)
-  username   String  @db.VarChar(100)
-  createdate String? @db.VarChar(20)
-  updatedate String? @db.VarChar(250)
+  id           Int      @id @default(autoincrement())
+  uuid         String   @db.VarChar(100)
+  nameposition String   @db.VarChar(100)
+  createdate   DateTime @db.Timestamptz(3)
 }
 
 model positionkpi {
