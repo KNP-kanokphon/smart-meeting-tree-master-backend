@@ -63,4 +63,20 @@ export class UserattendeesRepository {
       },
     });
   }
+  async updateStatusUser(
+    idmeeting: string,
+    iduser: string,
+    option?: { prisma?: TQueryClient },
+  ) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.userattendees.updateMany({
+      where: {
+        uuidprofile: iduser,
+        idmeeting: idmeeting,
+      },
+      data: {
+        confirm: true,
+      },
+    });
+  }
 }

@@ -46,6 +46,7 @@ export class UserattendeesService {
         uuid: e.uuid,
         idmeeting: id,
         checkin: false,
+        confirm: false,
         type: 'userBoard',
       };
       this.userattendeesRepo.createMany(data);
@@ -57,6 +58,7 @@ export class UserattendeesService {
         uuid: e.uuid,
         idmeeting: id,
         checkin: false,
+        confirm: false,
         type: 'userAttendee',
       };
       this.userattendeesRepo.createMany(data);
@@ -77,5 +79,8 @@ export class UserattendeesService {
   }
   async getuserAll() {
     return await this.listnameRepo.getuserAll();
+  }
+  async updateStatusUser(idmeeting: string, iduser: string) {
+    return this.userattendeesRepo.updateStatusUser(idmeeting, iduser);
   }
 }

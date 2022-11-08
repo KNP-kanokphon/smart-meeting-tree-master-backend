@@ -73,6 +73,7 @@ model userattendees {
   uuid        String  @db.VarChar(255)
   idmeeting   String  @db.VarChar(255)
   type        String  @db.VarChar(255)
+  confirm     Boolean @db.Boolean
   checkin     Boolean @db.Boolean
 }
 
@@ -84,7 +85,7 @@ model agendes {
   step          String? @db.VarChar(255)
 }
 
-model detailAgendes {
+model detailagendes {
   id         Int     @id @default(autoincrement())
   idmeeting  String  @db.VarChar(255)
   step       String? @db.VarChar(255)
@@ -101,7 +102,7 @@ model foodinmeeting {
   namefood String  @db.VarChar(255)
 }
 
-model file {
+model files {
   id        Int     @id @default(autoincrement())
   idmeeting String  @db.VarChar(255)
   namefile  String  @db.VarChar(255)

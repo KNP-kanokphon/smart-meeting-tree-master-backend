@@ -1,7 +1,7 @@
 import { PrismaService } from '../modules/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { TQueryClient } from '../modules/prisma/types';
-import { detailAgendes, Prisma } from '@prisma/client';
+import { detailagendes, Prisma } from '@prisma/client';
 
 @Injectable()
 export class DetailAgendesRepository {
@@ -9,11 +9,11 @@ export class DetailAgendesRepository {
 
   async findAll(option?: { prisma?: TQueryClient }) {
     const prisma = option?.prisma ?? this.prisma;
-    return prisma.detailAgendes.findMany();
+    return prisma.detailagendes.findMany();
   }
   async findByid(roomid: string, option?: { prisma?: TQueryClient }) {
     const prisma = option?.prisma ?? this.prisma;
-    return prisma.detailAgendes.findMany({
+    return prisma.detailagendes.findMany({
       where: {
         idmeeting: roomid,
       },
@@ -21,6 +21,6 @@ export class DetailAgendesRepository {
   }
   async create(data: any, option?: { prisma?: TQueryClient }) {
     const prisma = option?.prisma ?? this.prisma;
-    return prisma.detailAgendes.create({ data });
+    return prisma.detailagendes.create({ data });
   }
 }

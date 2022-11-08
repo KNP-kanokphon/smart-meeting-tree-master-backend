@@ -3,7 +3,7 @@ import { PrismaService } from './prisma.service';
 import { UserRepository } from '../../repositories/User.repository';
 import { MeetingRepository } from '../../repositories/Meeting.repository';
 import { UserattendeesRepository } from '../../repositories/Userattendees.repository';
-import { FileRepository } from '../../repositories/file.repository';
+import { FileRepository } from '../../repositories/Files.repository';
 import { ListnameRepository } from '../../repositories/Listname.repository';
 import { AgendesRepository } from '../../repositories/Agendes.repository';
 import { DetailAgendesRepository } from '../../repositories/DetailAgendes.repository';
