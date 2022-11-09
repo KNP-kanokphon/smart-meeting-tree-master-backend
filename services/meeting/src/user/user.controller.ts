@@ -40,6 +40,14 @@ export class UserattendController {
   create(@Body() data: any) {
     return this.userattendeesService.createMany(data);
   }
+  @Get('positionall')
+  async getPositionAll() {
+    return this.userattendeesService.getPositionAll();
+  }
+  @Get('courseall')
+  async getCourseAll() {
+    return this.userattendeesService.getCourseAll();
+  }
   @Post('byuser')
   createMany(@Body() data: Prisma.userattendeesCreateManyInput) {
     return {
@@ -91,26 +99,6 @@ export class UserattendController {
   updateUserbyID(@Body('data') data: any, @Body('userid') userid: string) {
     return this.userattendeesService.updateUserbyID(data, userid);
   }
-
-  // @UseInterceptors(FileInterceptor('file'))
-  // async uploadFile(@UploadedFile() file: Express.Multer.File) {
-  //   console.log(file.buffer.toString('utf-8'));
-
-  //   const foo = papa.parse(file.buffer.toString('utf-8'), {
-  //     delimiter: ',',
-  //     header: true,
-  //     skipEmptyLines: true,
-  //   }) as any;
-  //   // console.log(foo);
-
-  //   const dataCsv = await csv().fromString(file.buffer.toString('utf-8'));
-  //   const result = await this.userattendeesService.importUser(
-  //     dataCsv,
-  //     foo.meta.fields,
-  //   );
-  //   return { result };
-  // }
-  @Post('import/position/:filetype')
   @Post('import/position/:filetype')
   async importPosition(
     @Body('data') data: any,

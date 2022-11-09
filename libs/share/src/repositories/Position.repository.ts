@@ -32,4 +32,8 @@ export class PositionRepository {
     const prisma = option?.prisma ?? this.prisma;
     return prisma.course.createMany({ data });
   }
+  async findallCourse(option?: { prisma?: TQueryClient }) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.course.findMany();
+  }
 }

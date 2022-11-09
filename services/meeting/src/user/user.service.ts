@@ -97,4 +97,12 @@ export class UserattendeesService {
       return await this.positionRepo.importcourse(data);
     }
   }
+  async getPositionAll() {
+    return await this.positionRepo.findAll();
+  }
+  async getCourseAll() {
+    console.log(await this.positionRepo.findallCourse());
+
+    return await this.positionRepo.findallCourse();
+  }
 }
