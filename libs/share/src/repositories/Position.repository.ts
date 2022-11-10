@@ -2,6 +2,7 @@ import { PrismaService } from '../modules/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { TQueryClient } from '../modules/prisma/types';
 import { position, course, Prisma } from '@prisma/client';
+import id from 'date-fns/locale/id';
 
 @Injectable()
 export class PositionRepository {
@@ -24,6 +25,17 @@ export class PositionRepository {
   ) {
     const prisma = option?.prisma ?? this.prisma;
     return prisma.position.createMany({ data });
+  }
+
+  async deletePosition(uuid: any, option?: { prisma?: TQueryClient }) {
+    console.log(uuid);
+
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.position.deleteMany({
+      where: {
+        uuid: uuid,
+      },
+    });
   }
   async importcourse(
     data: Prisma.courseCreateManyInput,
