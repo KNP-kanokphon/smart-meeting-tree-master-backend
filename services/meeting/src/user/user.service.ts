@@ -55,6 +55,7 @@ export class UserattendeesService {
         checkin: false,
         confirm: false,
         type: 'userBoard',
+        type_user: e.type_user,
       };
       this.userattendeesRepo.createMany(data);
     });
@@ -67,6 +68,7 @@ export class UserattendeesService {
         checkin: false,
         confirm: false,
         type: 'userAttendee',
+        type_user: e.type_user,
       };
       this.userattendeesRepo.createMany(data);
     });
