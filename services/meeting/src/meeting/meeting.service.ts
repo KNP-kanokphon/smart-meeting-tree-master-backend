@@ -26,13 +26,13 @@ export class MeetingService {
   }
 
   async findAgendaByid(findAgendaByid: string) {
-    console.log(findAgendaByid);
-
     return this.agendesRepo.findAgendaByid(findAgendaByid);
   }
+
   async findByid(roomid: string) {
     return this.meetingRepo.findByid(roomid);
   }
+
   async create(data: any) {
     // Prisma.meetingCreateManyInput
     const meetingData = {

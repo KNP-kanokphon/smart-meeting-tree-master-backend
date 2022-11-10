@@ -70,6 +70,11 @@ export class UserattendController {
     return this.userattendeesService.findUserInroom(roomid);
   }
 
+  @Get('updateUserbyid/:roomid')
+  async finduserByidroom(@Param('roomid') roomid: string) {
+    return this.userattendeesService.findUserInroom(roomid);
+  }
+
   @Post('userall')
   async getuserAll() {
     return await this.userattendeesService.getuserAll();
