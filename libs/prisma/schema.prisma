@@ -68,11 +68,13 @@ model userattendees {
   id          Int     @id @default(autoincrement())
   username    String  @db.VarChar(255)
   uuidprofile String  @db.VarChar(255)
-  uuid        String  @db.VarChar(255)
   idmeeting   String  @db.VarChar(255)
-  type        String  @db.VarChar(255)
+  type        String? @db.VarChar(255)
   type_user   String  @db.VarChar(255)
-  position    String  @db.VarChar(255)
+  position    String? @db.VarChar(255)
+  phone       String? @db.VarChar(255)
+  email       String? @db.VarChar(255)
+  model       String? @db.VarChar(255)
   confirm     Boolean @db.Boolean
   checkin     Boolean @db.Boolean
 }
