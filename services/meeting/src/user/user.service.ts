@@ -83,6 +83,9 @@ export class UserattendeesService {
   async findUserInroom(roomid: string) {
     return await this.userattendeesRepo.findUserInroom(roomid);
   }
+  async getUserInroomAll() {
+    return await this.userattendeesRepo.getUserInroomAll();
+  }
   async importUser(data: Prisma.listnameCreateManyInput) {
     return await this.listnameRepo.createMany(data);
   }
@@ -111,5 +114,8 @@ export class UserattendeesService {
       userid,
       status,
     );
+  }
+  async deletePosition(uuid: any) {
+    return await this.positionRepo.deletePosition(uuid);
   }
 }
