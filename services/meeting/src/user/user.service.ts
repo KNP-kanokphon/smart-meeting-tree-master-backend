@@ -56,6 +56,7 @@ export class UserattendeesService {
         confirm: false,
         type: 'userBoard',
         type_user: e.type_user,
+        position: e.position,
       };
       this.userattendeesRepo.createMany(data);
     });
