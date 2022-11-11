@@ -62,7 +62,7 @@ export class UserattendController {
   updateFood(
     @Param('roomid') roomid: any,
     @Param('userid') userid: any,
-    @Param('status') status: any,
+    @Param('status') status: boolean,
   ) {
     return {
       result: this.userattendeesService.updateFood(roomid, userid, status),

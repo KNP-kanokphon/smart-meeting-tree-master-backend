@@ -91,6 +91,10 @@ export class UserattendeesRepository {
     option?: { prisma?: TQueryClient },
   ) {
     const prisma = option?.prisma ?? this.prisma;
+    console.log(idmeeting);
+    console.log(iduser);
+    console.log(statusFood);
+
     return prisma.userattendees.updateMany({
       where: {
         uuidprofile: iduser,
