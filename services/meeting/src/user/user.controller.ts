@@ -54,6 +54,16 @@ export class UserattendController {
       result: this.userattendeesService.create(data),
     };
   }
+  @Put('foodupdate/:roomid/:userid/:status')
+  updateFood(
+    @Param('roomid') roomid: any,
+    @Param('userid') userid: any,
+    @Param('status') status: any,
+  ) {
+    return {
+      result: this.userattendeesService.updateFood(roomid, userid, status),
+    };
+  }
   @Get()
   findAll() {
     return this.userattendeesService.findAll();

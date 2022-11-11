@@ -79,6 +79,24 @@ export class UserattendeesRepository {
       },
     });
   }
+
+  async updatefoodUser(
+    idmeeting: any,
+    iduser: any,
+    statusFood: boolean,
+    option?: { prisma?: TQueryClient },
+  ) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.userattendees.updateMany({
+      where: {
+        uuidprofile: iduser,
+        idmeeting: idmeeting,
+      },
+      data: {
+        foodstatus: statusFood,
+      },
+    });
+  }
   // async updateUserbyID(
   //   data: any,
   //   userid: string,

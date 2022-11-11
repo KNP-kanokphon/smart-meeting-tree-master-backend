@@ -105,4 +105,11 @@ export class UserattendeesService {
   async getCourseAll() {
     return await this.positionRepo.findallCourse();
   }
+  async updateFood(roomid: any, userid: any, status: any) {
+    return await this.userattendeesRepo.updateStatusUser(
+      roomid,
+      userid,
+      status,
+    );
+  }
 }
