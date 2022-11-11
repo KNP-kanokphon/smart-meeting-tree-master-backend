@@ -123,6 +123,16 @@ export class UserattendController {
   updateUserbyID(@Body('data') data: any, @Param('userid') userid: string) {
     return this.userattendeesService.updateUserbyID(data, userid);
   }
+
+  @Put('updateUserDetail/:roomid/:userid')
+  updateUserDetail(
+    @Body('data') data: any,
+    @Param('roomid') roomid: string,
+    @Param('userid') userid: string) {
+    console.log(data)
+    return this.userattendeesService.updateUserDetail(roomid, userid, data);
+  }
+
   @Post('import/position/:filetype')
   async importPosition(
     @Body('data') data: any,

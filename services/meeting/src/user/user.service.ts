@@ -122,4 +122,8 @@ export class UserattendeesService {
   async deletePosition(uuid: any) {
     return await this.positionRepo.deletePosition(uuid);
   }
+
+  async updateUserDetail(roomid:any, userId:any, data:Any) {
+    return await this.userattendeesRepo.updateUserDetail(roomid,userId,data);
+  }
 }

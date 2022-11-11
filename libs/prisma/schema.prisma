@@ -78,6 +78,7 @@ model userattendees {
   confirm     Boolean @db.Boolean
   checkin     Boolean @db.Boolean
   foodstatus  Boolean @db.Boolean
+  signature   String? @db.VarChar()
 }
 
 model agendes {

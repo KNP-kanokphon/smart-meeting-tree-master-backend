@@ -101,6 +101,24 @@ export class UserattendeesRepository {
       },
     });
   }
+
+  async updateUserDetail(
+    idmeeting: any,
+    iduser: any,
+    data: any,
+    option?: { prisma?: TQueryClient },
+  ) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.userattendees.updateMany({
+      where: {
+        uuidprofile: iduser,
+        idmeeting: idmeeting,
+      },
+      data: {
+        signature: data.signature,
+      },
+    });
+  }
   // async updateUserbyID(
   //   data: any,
   //   userid: string,
