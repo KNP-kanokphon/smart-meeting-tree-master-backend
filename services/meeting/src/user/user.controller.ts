@@ -58,7 +58,6 @@ export class UserattendController {
       result: this.userattendeesService.create(data),
     };
   }
-<<<<<<< HEAD
   @Put('foodupdate/:roomid/:userid/:status')
   updateFood(
     @Param('roomid') roomid: any,
@@ -68,11 +67,10 @@ export class UserattendController {
     return {
       result: this.userattendeesService.updateFood(roomid, userid, status),
     };
-=======
+  }
   @Delete('delete/position/:uuid')
   async deletePosition(@Param('uuid') uuid: any) {
     return this.userattendeesService.deletePosition(uuid);
->>>>>>> 55fe935067d5fbd4949ddcff9d3e3a8785274d0c
   }
   @Get()
   findAll() {
