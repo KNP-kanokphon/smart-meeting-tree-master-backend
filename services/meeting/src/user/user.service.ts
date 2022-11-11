@@ -56,6 +56,7 @@ export class UserattendeesService {
         confirm: false,
         type: 'userBoard',
         type_user: e.type_user,
+        foodstatus: false,
       };
       this.userattendeesRepo.createMany(data);
     });
@@ -69,6 +70,7 @@ export class UserattendeesService {
         confirm: false,
         type: 'userAttendee',
         type_user: e.type_user,
+        foodstatus: false,
       };
       this.userattendeesRepo.createMany(data);
     });
