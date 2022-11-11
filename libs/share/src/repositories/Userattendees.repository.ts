@@ -7,10 +7,10 @@ import { userattendees, Prisma } from '@prisma/client';
 export class UserattendeesRepository {
   constructor(private prisma: PrismaService) {}
 
-  //   async findAll(option?: { prisma?: TQueryClient }) {
-  //     const prisma = option?.prisma ?? this.prisma;
-  //     return prisma.userattendees.findMany();
-  //   }
+  // async findAll(option?: { prisma?: TQueryClient }) {
+  //   const prisma = option?.prisma ?? this.prisma;
+  //   return prisma.userattendees.findMany();
+  // }
   async createMany(
     data: Prisma.userattendeesCreateManyInput,
     option?: { prisma?: TQueryClient },
@@ -63,6 +63,10 @@ export class UserattendeesRepository {
       },
     });
   }
+  async getUserInroomAll(option?: { prisma?: TQueryClient }) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.userattendees.findMany();
+  }
   async updateStatusUser(
     idmeeting: string,
     iduser: string,
@@ -76,6 +80,24 @@ export class UserattendeesRepository {
       },
       data: {
         confirm: true,
+      },
+    });
+  }
+
+  async updatefoodUser(
+    idmeeting: any,
+    iduser: any,
+    statusFood: boolean,
+    option?: { prisma?: TQueryClient },
+  ) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.userattendees.updateMany({
+      where: {
+        uuidprofile: iduser,
+        idmeeting: idmeeting,
+      },
+      data: {
+        foodstatus: statusFood,
       },
     });
   }

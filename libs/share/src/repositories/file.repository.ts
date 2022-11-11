@@ -45,4 +45,27 @@ export class FileRepository {
       },
     });
   }
+  getPathFilePdf(roomid: string, option?: { prisma?: TQueryClient }) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.files.findMany({
+      where: {
+        idmeeting: roomid,
+      },
+    });
+  }
+  getfilestep(
+    roomid: string,
+    step: string,
+    namefile: string,
+    option?: { prisma?: TQueryClient },
+  ) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.files.findMany({
+      where: {
+        idmeeting: roomid,
+        step: step,
+        namefile: namefile,
+      },
+    });
+  }
 }

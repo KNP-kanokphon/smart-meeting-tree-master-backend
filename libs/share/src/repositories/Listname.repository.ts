@@ -36,10 +36,9 @@ export class ListnameRepository {
     option?: { prisma?: TQueryClient },
   ) {
     const prisma = option?.prisma ?? this.prisma;
-
     return prisma.listname.updateMany({
       where: {
-        uuid: data.uuid,
+        uuid: userid,
       },
       data: {
         username: data.username,

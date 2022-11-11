@@ -74,6 +74,12 @@ export class MeetingService {
   async getFilePdf(idmeeting: string) {
     return this.fileRepo.getFileByid(idmeeting);
   }
+  async getfilestep(idmeeting: string, step: any, namefile: any) {
+    return this.fileRepo.getfilestep(idmeeting, step, namefile);
+  }
+  async getPathFilePdf(idmeeting: string) {
+    return this.fileRepo.getPathFilePdf(idmeeting);
+  }
   async createAgendes(data: any, id: string, step: string) {
     const path = `./files_all/file_agenda/${id}/${step}/`;
     const dataAgende = {
@@ -115,5 +121,8 @@ export class MeetingService {
         );
       });
     }
+  }
+  async findFoodFetail(roomid: any) {
+    return this.foodRepo.findByid(roomid);
   }
 }

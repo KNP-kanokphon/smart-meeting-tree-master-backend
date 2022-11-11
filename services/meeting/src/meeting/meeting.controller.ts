@@ -46,11 +46,24 @@ export class MeetingController {
   ): Promise<any> {
     return this.meetingService.uploadfile(files, idmeeting);
   }
-  @Get('filepdf/:roomid')
+  @Get('getfileoverview/:roomid')
   async getFile(@Param('roomid') roomid: string, @Res() res: Response) {
-    const path = await this.meetingService.getFilePdf(roomid);
-    res.download(path[0].pathfile + path[0].namefile);
+    return await this.meetingService.getFilePdf(roomid);
+    // res.download(path[0].pathfile + path[0].namefile);
   }
+  @Get('getPathFilePdf/:roomid')
+  async getPathFilePdf(@Param('roomid') roomid: string) {
+    return this.meetingService.getPathFilePdf(roomid);
+  }
+  @Get('getfilestep/:roomid/:step/:namefile')
+  async getfilestep(
+    @Param('roomid') roomid: string,
+    @Param('step') step: string,
+    @Param('namefile') namefile: string,
+  ) {
+    return this.meetingService.getfilestep(roomid, step, namefile);
+  }
+
   @Post('agenda')
   @UseInterceptors(AnyFilesInterceptor())
   createAgendes(
@@ -72,5 +85,9 @@ export class MeetingController {
   @Get('agenda/:roomid')
   findAgendaByid(@Param('roomid') roomid: string) {
     return this.meetingService.findAgendaByid(roomid);
+  }
+  @Get('detailfood/:roomid')
+  findFoodFetail(@Param('roomid') roomid: string) {
+    return this.meetingService.findFoodFetail(roomid);
   }
 }
