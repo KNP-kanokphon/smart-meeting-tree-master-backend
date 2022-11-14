@@ -128,8 +128,8 @@ export class UserattendController {
   updateUserDetail(
     @Body('data') data: any,
     @Param('roomid') roomid: string,
-    @Param('userid') userid: string) {
-    console.log(data)
+    @Param('userid') userid: string,
+  ) {
     return this.userattendeesService.updateUserDetail(roomid, userid, data);
   }
 

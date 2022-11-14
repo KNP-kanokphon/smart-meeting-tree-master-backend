@@ -125,4 +125,7 @@ export class MeetingService {
   async findFoodFetail(roomid: any) {
     return this.foodRepo.findByid(roomid);
   }
+  async getDetailagendes(roomid: any, idAgendess: any) {
+    return this.detailAgendesRepo.findByid(roomid, idAgendess);
+  }
 }
