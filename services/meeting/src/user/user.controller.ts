@@ -119,7 +119,7 @@ export class UserattendController {
   @Put('updatestatususer/:roomid/:userid')
   updateStatusUser(
     @Param('roomid') roomid: string,
-    @Param('roomid') userId: string,
+    @Param('userid') userId: string,
   ) {
     return this.userattendeesService.updateStatusUser(roomid, userId);
   }
