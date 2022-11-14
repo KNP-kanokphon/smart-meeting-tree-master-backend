@@ -87,6 +87,9 @@ export class UserattendeesService {
   async findUserInroom(roomid: string) {
     return await this.userattendeesRepo.findUserInroom(roomid);
   }
+  async createUserAdd(data: Prisma.listnameCreateManyInput) {
+    return await this.listnameRepo.createMany(data);
+  }
   async getUserInroomAll() {
     return await this.userattendeesRepo.getUserInroomAll();
   }
