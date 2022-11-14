@@ -89,6 +89,11 @@ export class UserattendController {
     return this.userattendeesService.findUserInroom(roomid);
   }
 
+  @Post('createuser')
+  async createUserAdd(@Body('data') data: Prisma.listnameCreateManyInput) {
+    return this.userattendeesService.createUserAdd(data);
+  }
+
   @Get('updateUserbyid/:roomid')
   async finduserByidroom(@Param('roomid') roomid: string) {
     return this.userattendeesService.findUserInroom(roomid);
@@ -130,6 +135,7 @@ export class UserattendController {
     @Param('roomid') roomid: string,
     @Param('userid') userid: string,
   ) {
+    console.log(data);
     return this.userattendeesService.updateUserDetail(roomid, userid, data);
   }
 
