@@ -45,6 +45,7 @@ export class MeetingService {
       starttime: data.starttime,
       endtime: data.endtime,
       uuid: data.uuid,
+      summarychecklist: false,
     };
     data['dataFood'].map((e) => {
       const foodData = {
@@ -127,5 +128,20 @@ export class MeetingService {
   }
   async getDetailagendes(roomid: any, idAgendess: any) {
     return this.detailAgendesRepo.findByid(roomid, idAgendess);
+  }
+  async savesummarymeeting(roomid: string, data: any) {
+    return this.meetingRepo.updateSummary(roomid, data);
+  }
+  async savesummarymeetingFile(roomid: string, files: any) {
+    const path = `./files_all/file_summarymeeting/${roomid}/`;
+    const type = 'filesummary';
+    const step = null;
+    const resultEpm = fs.mkdirSync(path, { recursive: true });
+    files.map((e) => {
+      fs.createWriteStream(`${path}/${e.originalname}`).write(e.buffer);
+    });
+    files.map((e) => {
+      return this.fileRepo.create(roomid, e.originalname, path, type, step);
+    });
   }
 }

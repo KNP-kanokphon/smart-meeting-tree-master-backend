@@ -26,4 +26,20 @@ export class MeetingRepository {
     const prisma = option?.prisma ?? this.prisma;
     return prisma.meetings.create({ data });
   }
+  async updateSummary(
+    roomid: string,
+    datasummary: string,
+    option?: { prisma?: TQueryClient },
+  ) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.meetings.updateMany({
+      where: {
+        uuid: roomid,
+      },
+      data: {
+        summarymeeting: datasummary,
+        summarychecklist: true,
+      },
+    });
+  }
 }

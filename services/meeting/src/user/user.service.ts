@@ -60,7 +60,9 @@ export class UserattendeesService {
         position: e.position,
       };
       this.userattendeesRepo.createMany(data);
+      console.log('userBoard', e);
     });
+
     data['userAttendee'].map((e) => {
       const data: any = {
         username: e.username,
@@ -75,6 +77,7 @@ export class UserattendeesService {
         position: e.position,
       };
       this.userattendeesRepo.createMany(data);
+      console.log('userAttendee', e);
     });
   }
 

@@ -53,6 +53,22 @@ export class MeetingController {
   ): Promise<any> {
     return this.meetingService.uploadfile(files, idmeeting);
   }
+  @Post('/savesummarymeeting/:roomid')
+  async savesummarymeeting(
+    @Param('roomid') idmeeting: string,
+    @Body('data') data: string,
+  ) {
+    return this.meetingService.savesummarymeeting(idmeeting, data);
+  }
+  @Post('/savesummarymeetingFile/:roomid')
+  @UseInterceptors(AnyFilesInterceptor())
+  async savesummarymeetingFile(
+    @UploadedFiles() files: Array<Express.Multer.File>,
+    @Param('roomid') idmeeting: string,
+  ): Promise<any> {
+    return this.meetingService.savesummarymeetingFile(idmeeting, files);
+  }
+
   @Get('getfileoverview/:roomid')
   async getFile(@Param('roomid') roomid: string, @Res() res: Response) {
     return await this.meetingService.getFilePdf(roomid);
