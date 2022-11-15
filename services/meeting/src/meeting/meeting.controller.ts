@@ -25,7 +25,6 @@ import { Response } from 'express';
 @UseFilters(AppErrorExceptionFilter)
 export class MeetingController {
   constructor(private readonly meetingService: MeetingService) {}
-
   @Get()
   findAll() {
     return this.meetingService.findAll();
@@ -53,6 +52,11 @@ export class MeetingController {
   ): Promise<any> {
     return this.meetingService.uploadfile(files, idmeeting);
   }
+  @Get('/getfilenamesummary/:roomid')
+  getfilenamesummary(@Param('roomid') roomid: string) {
+    return this.meetingService.getFilePdf(roomid);
+  }
+
   @Post('/savesummarymeeting/:roomid')
   async savesummarymeeting(
     @Param('roomid') idmeeting: string,
