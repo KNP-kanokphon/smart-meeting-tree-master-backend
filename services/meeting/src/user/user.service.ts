@@ -14,13 +14,19 @@ import { el } from 'date-fns/locale';
 
 @Injectable()
 export class UserService {
-  constructor(private userRepo: UserRepository) {}
+  constructor(
+    private userRepo: UserRepository,
+    private listnameRepo: ListnameRepository,
+  ) {}
 
   findAll() {
     return this.userRepo.findAll();
   }
   async create(data: Prisma.userCreateManyInput) {
     return this.userRepo.create(data);
+  }
+  async findUser(userid: string) {
+    return await this.listnameRepo.findUser(userid);
   }
 }
 @Injectable()

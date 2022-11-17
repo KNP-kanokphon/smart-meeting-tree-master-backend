@@ -50,4 +50,12 @@ export class ListnameRepository {
       },
     });
   }
+  async findUser(userid: string, option?: { prisma?: TQueryClient }) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.listname.findMany({
+      where: {
+        uuid: userid,
+      },
+    });
+  }
 }

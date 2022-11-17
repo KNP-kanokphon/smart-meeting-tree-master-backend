@@ -31,6 +31,10 @@ export class UserController {
   findAll() {
     return this.userService.findAll();
   }
+  @Get('findbyid/:userid')
+  findUser(@Param('userid') userid: any) {
+    return this.userService.findUser(userid);
+  }
 }
 @Controller('userattendees')
 @UseFilters(AppErrorExceptionFilter)
