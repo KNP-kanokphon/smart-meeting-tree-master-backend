@@ -16,6 +16,7 @@ model meetings {
   room             String  @db.VarChar(255)
   floor            String? @db.VarChar(255)
   building         String? @db.VarChar(255)
+  meetingplace     String? @db.VarChar(255)
   day              String  @db.VarChar(255)
   starttime        String  @db.VarChar(255)
   endtime          String  @db.VarChar(255)
