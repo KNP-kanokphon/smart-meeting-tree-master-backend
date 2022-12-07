@@ -39,9 +39,11 @@ model listname {
   username    String  @db.VarChar(250)
   phone       String? @db.VarChar(250)
   type        String  @db.VarChar(20)
-  course      String? @db.VarChar(250)
+  course      Json?   @db.Json
   position    String? @db.VarChar(250)
   positionkpi String? @db.VarChar(250)
+  address     String? @db.VarChar(250)
+  email       String? @db.VarChar(250)
 }
 
 model course {
@@ -115,4 +117,20 @@ model files {
   pathfile  String  @db.VarChar(255)
   type      String  @db.VarChar(255)
   step      String? @db.VarChar(255)
+}
+
+model userparty {
+  id     Int    @id @default(autoincrement())
+  name   String @db.VarChar(255)
+  iduser String @db.VarChar(255)
+  uuid   String @db.VarChar(255)
+}
+
+model userpartyhistory {
+  id         Int     @id @default(autoincrement())
+  name       String  @db.VarChar(255)
+  iduser     String  @db.VarChar(255)
+  uuid       String  @db.VarChar(255)
+  checkin    Boolean @db.Boolean
+  recivegift Boolean @db.Boolean
 }

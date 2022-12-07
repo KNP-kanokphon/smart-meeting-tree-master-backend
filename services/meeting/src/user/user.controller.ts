@@ -11,7 +11,11 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { UserService, UserattendeesService } from './user.service';
+import {
+  UserService,
+  UserPartyService,
+  UserattendeesService,
+} from './user.service';
 import * as papa from 'papaparse';
 import { AppErrorExceptionFilter } from '@d-debt/share';
 import { Prisma } from '@prisma/client';
@@ -34,6 +38,38 @@ export class UserController {
   @Get('findbyid/:userid')
   findUser(@Param('userid') userid: any) {
     return this.userService.findUser(userid);
+  }
+}
+
+@Controller('userparty')
+@UseFilters(AppErrorExceptionFilter)
+export class UserPartyController {
+  constructor(private readonly userParty: UserPartyService) {}
+  @Post()
+  create(@Body() data: any) {
+    return this.userParty.create(data);
+  }
+  @Get()
+  findAll() {
+    return this.userParty.findAll();
+  }
+  @Put('/:userid')
+  update(@Param('userid') userid: string) {
+    return {
+      result: this.userParty.update(userid),
+    };
+  }
+  @Put('/userin/:userid')
+  updateuserparty(@Param('userid') userid: string) {
+    return this.userParty.updateuserparty(userid);
+  }
+  @Get('/:userid')
+  findUser(@Param('userid') userid: any) {
+    return this.userParty.findUser(userid);
+  }
+  @Put('/recivegif/:userid')
+  recivegif(@Param('userid') userid: string) {
+    return this.userParty.recivegif(userid);
   }
 }
 @Controller('userattendees')

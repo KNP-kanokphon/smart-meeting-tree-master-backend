@@ -9,6 +9,8 @@ import { AgendesRepository } from '../../repositories/Agendes.repository';
 import { DetailAgendesRepository } from '../../repositories/DetailAgendes.repository';
 import { FoodRepository } from '../../repositories/Foodinmeeting.repository';
 import { PositionRepository } from '../../repositories/Position.repository';
+import { UserpartyRepository } from '../../repositories/Userparty.repository';
+import { UserpartyhistoryRepository } from '../../repositories/Userpartyhistory.repository';
 
 const services = [
   PrismaService,
@@ -21,6 +23,8 @@ const services = [
   DetailAgendesRepository,
   FoodRepository,
   PositionRepository,
+  UserpartyRepository,
+  UserpartyhistoryRepository,
 ];
 @Module({
   providers: [...services],

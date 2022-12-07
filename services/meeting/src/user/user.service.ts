@@ -5,6 +5,8 @@ import {
   ListnameRepository,
   FoodRepository,
   PositionRepository,
+  UserpartyRepository,
+  UserpartyhistoryRepository,
 } from '@d-debt/share';
 import { Prisma } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
@@ -137,5 +139,49 @@ export class UserattendeesService {
 
   async updateUserDetail(roomid: any, userId: any, data: any) {
     return await this.userattendeesRepo.updateUserDetail(roomid, userId, data);
+  }
+}
+
+@Injectable()
+export class UserPartyService {
+  constructor(
+    private userpartyRepo: UserpartyRepository,
+    private userpartyhistoryRepo: UserpartyhistoryRepository,
+  ) {}
+
+  findAll() {
+    return this.userpartyRepo.findAll();
+  }
+  async create(data: Prisma.userpartyCreateManyInput) {
+    return this.userpartyRepo.create(data['data']);
+  }
+  async findUser(userid: string) {
+    return await this.userpartyRepo.findUser(userid);
+  }
+  async update(userid: string) {
+    return await this.userpartyRepo.update(userid);
+  }
+  async updateuserparty(userid: string) {
+    const userDetail: any = await this.userpartyRepo.findUser(userid);
+    if (Object.keys(userDetail).length > 0) {
+      const data = {
+        name: userDetail[0].name,
+        iduser: userDetail[0].iduser,
+        uuid: userDetail[0].uuid,
+        checkin: true,
+        recivegift: false,
+      };
+      return await this.userpartyhistoryRepo.create(data);
+    } else {
+      return 0;
+    }
+  }
+  async recivegif(userid: string) {
+    const userDetail: any = await this.userpartyRepo.findUser(userid);
+    if (Object.keys(userDetail).length > 0) {
+      return await this.userpartyhistoryRepo.update(userid);
+    } else {
+      return 0;
+    }
   }
 }

@@ -47,6 +47,8 @@ export class ListnameRepository {
         course: data.course,
         position: data.position,
         positionkpi: data.positionkpi,
+        address: data.address,
+        email: data.email,
       },
     });
   }
