@@ -13,14 +13,14 @@ export class DetailAgendesRepository {
   }
   async findByid(
     roomid: string,
-    idAgendess: string,
+    step: string,
     option?: { prisma?: TQueryClient },
   ) {
     const prisma = option?.prisma ?? this.prisma;
     return prisma.detailagendes.findMany({
       where: {
         idmeeting: roomid,
-        idagendess: idAgendess,
+        step: step,
       },
       orderBy: [
         {

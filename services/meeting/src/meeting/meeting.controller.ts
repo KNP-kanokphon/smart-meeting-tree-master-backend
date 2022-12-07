@@ -33,12 +33,12 @@ export class MeetingController {
   findByid(@Param('roomid') roomid: string) {
     return this.meetingService.findByid(roomid);
   }
-  @Get('getDetailagendes/:roomid/:idggendess')
+  @Get('getDetailagendes/:roomid/:step')
   getDetailagendes(
     @Param('roomid') roomid: string,
-    @Param('idggendess') idagendess: string,
+    @Param('step') step: string,
   ) {
-    return this.meetingService.getDetailagendes(roomid, idagendess);
+    return this.meetingService.getDetailagendes(roomid, step);
   }
   @Post()
   create(@Body() data: any) {

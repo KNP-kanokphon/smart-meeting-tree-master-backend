@@ -41,6 +41,7 @@ export class MeetingService {
       room: data.room,
       floor: data.floor,
       building: data.building,
+      meetingplace: data.meetingplace,
       day: data.day,
       starttime: data.starttime,
       endtime: data.endtime,
@@ -126,8 +127,8 @@ export class MeetingService {
   async findFoodFetail(roomid: any) {
     return this.foodRepo.findByid(roomid);
   }
-  async getDetailagendes(roomid: any, idAgendess: any) {
-    return this.detailAgendesRepo.findByid(roomid, idAgendess);
+  async getDetailagendes(roomid: any, step: any) {
+    return this.detailAgendesRepo.findByid(roomid, step);
   }
   async savesummarymeeting(roomid: string, data: any) {
     return this.meetingRepo.updateSummary(roomid, data);
