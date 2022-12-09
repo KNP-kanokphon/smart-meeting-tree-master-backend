@@ -26,12 +26,59 @@ model meetings {
 }
 
 model user {
-  id       Int     @id @default(autoincrement())
-  username String? @db.VarChar(100)
-  password String  @db.VarChar(100)
-  type     String  @db.VarChar(10)
-  level    String  @db.VarChar(50)
-  uuid     String  @db.VarChar(100)
+  id          Int     @id @default(autoincrement())
+  uuid        String  @db.VarChar(100)
+  username    String  @db.VarChar(100)
+  prefix      String  @db.VarChar(100)
+  idcard      String? @db.VarChar(100)
+  bridday     String? @db.VarChar(100)
+  phonenumber Json?   @db.Json
+  email       String? @db.VarChar(100)
+  course      String? @db.VarChar(100)
+  course1     String? @db.VarChar(100)
+  model       String? @db.VarChar(100)
+  position    String? @db.VarChar(100)
+  studentid   String? @db.VarChar(100)
+}
+
+model address {
+  id              Int     @id @default(autoincrement())
+  uuid            String  @db.VarChar(100)
+  housenumber     String? @db.VarChar(100)
+  villagebuilding String? @db.VarChar(100)
+  group           String? @db.VarChar(100)
+  alley           String? @db.VarChar(100)
+  road            String? @db.VarChar(100)
+  subdistrict     String? @db.VarChar(100)
+  district        String? @db.VarChar(100)
+  province        String? @db.VarChar(100)
+  zipcode         String? @db.VarChar(100)
+}
+
+model otherinformation {
+  id                        Int     @id @default(autoincrement())
+  uuid                      String  @db.VarChar(100)
+  passportnumber            String? @db.VarChar(100)
+  certificate               String? @db.VarChar(100)
+  workpermitnumber          String? @db.VarChar(100)
+  occupation                String? @db.VarChar(100)
+  careerposition            String? @db.VarChar(100)
+  monthlyaverageincome      String? @db.VarChar(100)
+  placeofemployment         String? @db.VarChar(100)
+  noplaceofemployment       String? @db.VarChar(100)
+  groupplaceofemployment    String? @db.VarChar(100)
+  soiplaceofemployment      String? @db.VarChar(100)
+  roadplaceofemployment     String? @db.VarChar(100)
+  tumbonplaceofemployment   String? @db.VarChar(100)
+  districtplaceofemployment String? @db.VarChar(100)
+  provinceplaceofemployment String? @db.VarChar(100)
+  zipplaceofemployment      String? @db.VarChar(100)
+  phoneplaceofemployment    String? @db.VarChar(100)
+  Icurrentlyhaveassets      String? @db.VarChar(100)
+  previousassociation       String? @db.VarChar(100)
+  criminalcase              String? @db.VarChar(100)
+  positionintheassociation  String? @db.VarChar(100)
+  additionaltext            String? @db.VarChar(100)
 }
 
 model listname {

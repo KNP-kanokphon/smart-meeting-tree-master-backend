@@ -30,6 +30,10 @@ export class UserService {
   async findUser(userid: string) {
     return await this.listnameRepo.findUser(userid);
   }
+
+  async importusers(data: string[]) {
+    return this.userRepo.importuser(data);
+  }
 }
 @Injectable()
 export class UserattendeesService {

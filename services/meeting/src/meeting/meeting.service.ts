@@ -33,7 +33,7 @@ export class MeetingService {
     return this.meetingRepo.findByid(roomid);
   }
 
-  async create(data: any) {
+  async create(data: Prisma.meetingsCreateManyInput) {
     // Prisma.meetingCreateManyInput
     const meetingData = {
       detail: data.detail,

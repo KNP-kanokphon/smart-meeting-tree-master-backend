@@ -18,4 +18,11 @@ export class UserRepository {
     const prisma = option?.prisma ?? this.prisma;
     return prisma.user.create({ data });
   }
+  async importuser(
+    data: Prisma.userCreateManyInput,
+    option?: { prisma?: TQueryClient },
+  ) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.user.createMany({ data });
+  }
 }

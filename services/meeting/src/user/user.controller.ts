@@ -39,6 +39,10 @@ export class UserController {
   findUser(@Param('userid') userid: any) {
     return this.userService.findUser(userid);
   }
+  @Post('importuser')
+  importusers(@Body() data: string[]) {
+    return this.userService.importusers(data);
+  }
 }
 
 @Controller('userparty')
