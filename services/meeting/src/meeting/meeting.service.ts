@@ -145,4 +145,102 @@ export class MeetingService {
       return this.fileRepo.create(roomid, e.originalname, path, type, step);
     });
   }
+  async updateroom(
+    data: {
+      roomid: string | any;
+      title: string;
+      room: string;
+      floor: string;
+      building: string;
+      meetingPlace: string;
+      date: Date;
+      timeStart: string;
+      timeEnd: string;
+      detailMeeting: string;
+    },
+    usersatd: {
+      id: number;
+      username: string;
+      uuidprofile: string;
+      idmeeting: string;
+      type: string;
+      type_user: string;
+      position: string;
+      phone: string | null;
+      email: string | null;
+      model: string | null;
+      confirm: boolean;
+      checkin: boolean;
+      foodstatus: boolean;
+      signature: string | null;
+    },
+    userboard: {
+      id: number;
+      username: string;
+      uuidprofile: string;
+      idmeeting: string;
+      type: string;
+      type_user: string;
+      position: string;
+      phone: string | null;
+      email: string | null;
+      model: string | null;
+      confirm: boolean;
+      checkin: boolean;
+      foodstatus: boolean;
+      signature: string | null;
+    },
+  ) {
+    {
+      console.log(data);
+      console.log(usersatd);
+      console.log(userboard);
+
+      // "userBoard": [
+      //     {
+      //         "id": 29,
+      //         "username": "นางสาวอรสา ขาวงาม",
+      //         "uuidprofile": "51e1adab-de06-49f7-803d-4edafbf00701",
+      //         "idmeeting": "60cc5f46-31c7-4e9f-9b49-c467e7dcf3f1",
+      //         "type": "userBoard",
+      //         "type_user": "previous",
+      //         "position": "d030cc5e-33c0-4375-9d22-802b15b9e149",
+      //         "phone": null,
+      //         "email": null,
+      //         "model": null,
+      //         "confirm": false,
+      //         "checkin": false,
+      //         "foodstatus": false,
+      //         "signature": null
+      //     }
+      // ],
+      // "userAttendee": [
+      //     {
+      //         "id": 30,
+      //         "username": "ดร.นักสิทธิ์ ศักดาพัฒน์",
+      //         "uuidprofile": "284dc21f-db3b-47d3-8c8b-9652fa0f281c",
+      //         "idmeeting": "60cc5f46-31c7-4e9f-9b49-c467e7dcf3f1",
+      //         "type": "userAttendee",
+      //         "type_user": "previous",
+      //         "position": "1a447fe9-9189-47e0-8261-e92d628e77ec",
+      //         "phone": null,
+      //         "email": null,
+      //         "model": null,
+      //         "confirm": false,
+      //         "checkin": false,
+      //         "foodstatus": false,
+      //         "signature": null
+      //     }
+      // ],
+      // "title": "เรื่อง",
+      // "room": "ห้องประชุม",
+      // "floor": "ชั้น",
+      // "building": "อาคาร",
+      // "meetingPlace": "สถานที่ประชุม",
+      // "date": "2022-12-13",
+      // "timeStart": "09:00:00",
+      // "timeEnd": "10:00:00",
+      // "detailMeeting": "รายละเอียดการประชุม"
+    }
+  }
 }

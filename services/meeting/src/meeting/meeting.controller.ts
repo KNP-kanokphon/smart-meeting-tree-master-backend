@@ -40,6 +40,58 @@ export class MeetingController {
   ) {
     return this.meetingService.getDetailagendes(roomid, step);
   }
+  @Put()
+  updateroom(
+    @Body('data')
+    data: {
+      roomid: string | any;
+      title: string;
+      room: string;
+      floor: string;
+      building: string;
+      meetingPlace: string;
+      date: Date;
+      timeStart: string;
+      timeEnd: string;
+      detailMeeting: string;
+    },
+    @Body('usersatd')
+    usersatd: {
+      id: number;
+      username: string;
+      uuidprofile: string;
+      idmeeting: string;
+      type: string;
+      type_user: string;
+      position: string;
+      phone: string | null;
+      email: string | null;
+      model: string | null;
+      confirm: boolean;
+      checkin: boolean;
+      foodstatus: boolean;
+      signature: string | null;
+    },
+    @Body('userboard')
+    userboard: {
+      id: number;
+      username: string;
+      uuidprofile: string;
+      idmeeting: string;
+      type: string;
+      type_user: string;
+      position: string;
+      phone: string | null;
+      email: string | null;
+      model: string | null;
+      confirm: boolean;
+      checkin: boolean;
+      foodstatus: boolean;
+      signature: string | null;
+    },
+  ) {
+    return this.meetingService.updateroom(data, usersatd, userboard);
+  }
   @Post()
   create(@Body() data: any) {
     return this.meetingService.create(data);
