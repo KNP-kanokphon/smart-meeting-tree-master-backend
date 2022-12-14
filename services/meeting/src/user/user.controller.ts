@@ -43,6 +43,10 @@ export class UserController {
   importusers(@Body() data: string[]) {
     return this.userService.importusers(data);
   }
+  // @Get('/:userid')
+  // findById(@Param('userid') userid: any, @Body('data') data: any) {
+  //   return this.userService.findById(userid, data);
+  // }
 }
 
 @Controller('userparty')

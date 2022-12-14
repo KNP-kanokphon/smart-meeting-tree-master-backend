@@ -25,4 +25,18 @@ export class UserRepository {
     const prisma = option?.prisma ?? this.prisma;
     return prisma.user.createMany({ data });
   }
+  findById(
+    data: Prisma.userCreateManyInput,
+    userid: string,
+    option?: {
+      prisma?: TQueryClient;
+    },
+  ) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.user.findMany({
+      where: {
+        uuid: userid,
+      },
+    });
+  }
 }

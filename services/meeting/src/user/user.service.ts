@@ -31,7 +31,7 @@ export class UserService {
     return await this.listnameRepo.findUser(userid);
   }
 
-  async importusers(data: string[]) {
+  async importusers(data: any) {
     return this.userRepo.importuser(data);
   }
 }
@@ -46,6 +46,10 @@ export class UserattendeesService {
 
   findAll() {
     return this.userRepo.findAll();
+  }
+
+  findById(data: any, userid: string) {
+    return this.userRepo.findById(data, userid);
   }
 
   async updateUserbyID(data: any, userid: string) {
