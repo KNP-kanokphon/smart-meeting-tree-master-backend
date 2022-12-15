@@ -41,6 +41,8 @@ model user {
   studentid    String? @db.VarChar(100)
   username_eng String? @db.VarChar(100)
   line         String? @db.VarChar(100)
+  type         String? @db.VarChar(100)
+  active       String? @db.VarChar(100)
 }
 
 model address {
