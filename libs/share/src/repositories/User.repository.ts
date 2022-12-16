@@ -39,4 +39,22 @@ export class UserRepository {
       },
     });
   }
+  async deleteUser(uuid: any, option?: { prisma?: TQueryClient }) {
+    console.log(uuid);
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.user.deleteMany({
+      where: {
+        uuid: uuid,
+      },
+    });
+  }
+  async updateUser(uuid: any, data: any, option?: { prisma?: TQueryClient }) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.user.updateMany({
+      where: {
+        uuid: uuid,
+      },
+      data: data,
+    });
+  }
 }

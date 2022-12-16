@@ -43,10 +43,18 @@ export class UserController {
   importusers(@Body() data: string[]) {
     return this.userService.importusers(data);
   }
-  // @Get('/:userid')
-  // findById(@Param('userid') userid: any, @Body('data') data: any) {
-  //   return this.userService.findById(userid, data);
-  // }
+
+  @Delete('delete/user/:uuid')
+  async deleteUser(@Param('uuid') uuid: any) {
+    return this.userService.deleteUser(uuid);
+  }
+
+  @Put('updateuser/:uuid')
+  updateUser(@Body('data') data: any, @Param('uuid') uuid: string) {
+    console.log(data);
+    console.log(uuid);
+    return this.userService.updateUser(uuid, data);
+  }
 }
 
 @Controller('userparty')

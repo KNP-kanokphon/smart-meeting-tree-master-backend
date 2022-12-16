@@ -34,7 +34,16 @@ export class UserService {
   async importusers(data: any) {
     return this.userRepo.importuser(data);
   }
+
+  async deleteUser(uuid: any) {
+    return this.userRepo.deleteUser(uuid);
+  }
+
+  async updateUser(userid: string, data: any) {
+    return this.userRepo.updateUser(userid, data);
+  }
 }
+
 @Injectable()
 export class UserattendeesService {
   constructor(

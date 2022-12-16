@@ -34,10 +34,10 @@ model user {
   bridday           String? @db.VarChar(100)
   phonenumber       Json?   @db.Json
   email             String? @db.VarChar(100)
-  course            String? @db.VarChar(100)
-  course1           String? @db.VarChar(100)
+  course            Json?   @db.Json
+  course1           Json?   @db.Json
   model             String? @db.VarChar(100)
-  position          String? @db.VarChar(100)
+  position          Json?   @db.Json
   studentid         String? @db.VarChar(100)
   username_eng      String? @db.VarChar(100)
   line              String? @db.VarChar(100)
@@ -72,7 +72,7 @@ model user {
   all_assets        String? @db.VarChar(100)
   previous_job      String? @db.VarChar(100)
   criminalcase      String? @db.VarChar(100)
-  position_guild    String? @db.VarChar(100)
+  position_guild    Json?   @db.Json
   guild             String? @db.VarChar(100)
   others            String? @db.VarChar(100)
 }
