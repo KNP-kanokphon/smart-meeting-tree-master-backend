@@ -85,4 +85,14 @@ export class FileRepository {
       },
     });
   }
+  deleteoverviwe(roomid: string, option?: { prisma?: TQueryClient }) {
+    const prisma = option?.prisma ?? this.prisma;
+    const type = 'fileOverviwe';
+    return prisma.files.deleteMany({
+      where: {
+        idmeeting: roomid,
+        type,
+      },
+    });
+  }
 }

@@ -33,4 +33,18 @@ export class DetailAgendesRepository {
     const prisma = option?.prisma ?? this.prisma;
     return prisma.detailagendes.create({ data });
   }
+  async deletebyidmeeting(
+    idmeeting: string,
+    option?: { prisma?: TQueryClient },
+  ) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.detailagendes.deleteMany({ where: { idmeeting: idmeeting } });
+  }
+  async createmany(
+    data: Prisma.detailagendesCreateManyArgs,
+    option?: { prisma?: TQueryClient },
+  ) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.detailagendes.createMany(data);
+  }
 }

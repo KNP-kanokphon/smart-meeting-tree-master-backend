@@ -40,6 +40,10 @@ export class MeetingController {
   ) {
     return this.meetingService.getDetailagendes(roomid, step);
   }
+  @Get('/getfilenamesummary/:roomid')
+  getfilenamesummary(@Param('roomid') roomid: string) {
+    return this.meetingService.getFilePdf(roomid);
+  }
   @Put()
   updateroom(
     @Body('data')
@@ -98,17 +102,27 @@ export class MeetingController {
     @Body('dataAgenda') dataAgenda: any,
     @Body('getLastdata') getLastdata: any,
     @Body('dataFood') dataFood: any,
+    @Body('oldFileupdate') oldFileupdate: any,
   ) {
     return this.meetingService.updatemeeting(
       id,
       dataAgenda,
       getLastdata,
       dataFood,
+      oldFileupdate,
     );
   }
   @Post()
   create(@Body() data: any) {
     return this.meetingService.create(data);
+  }
+  @Post('/updatefileoverviwe/:roomid')
+  @UseInterceptors(AnyFilesInterceptor())
+  async updatefileoverviwe(
+    @Param('roomid') idmeeting: string,
+    @UploadedFiles() files: Array<Express.Multer.File>,
+  ): Promise<any> {
+    return this.meetingService.updatefileoverviwe(idmeeting, files);
   }
   @Post('/import/:id')
   @UseInterceptors(AnyFilesInterceptor())
@@ -117,10 +131,6 @@ export class MeetingController {
     @Param('id') idmeeting: string,
   ): Promise<any> {
     return this.meetingService.uploadfile(files, idmeeting);
-  }
-  @Get('/getfilenamesummary/:roomid')
-  getfilenamesummary(@Param('roomid') roomid: string) {
-    return this.meetingService.getFilePdf(roomid);
   }
 
   @Post('/savesummarymeeting/:roomid')

@@ -23,4 +23,12 @@ export class FoodRepository {
     const prisma = option?.prisma ?? this.prisma;
     return prisma.foodinmeeting.create({ data });
   }
+  async deletebyid(roomid: string, option?: { prisma?: TQueryClient }) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.foodinmeeting.deleteMany({
+      where: {
+        uuid: roomid,
+      },
+    });
+  }
 }

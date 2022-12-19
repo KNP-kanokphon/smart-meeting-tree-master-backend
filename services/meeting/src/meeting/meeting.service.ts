@@ -6,6 +6,7 @@ import {
   AgendesRepository,
   DetailAgendesRepository,
   FoodRepository,
+  UserattendeesRepository,
 } from '@d-debt/share';
 import { Prisma } from '@prisma/client';
 import * as fs from 'fs';
@@ -19,6 +20,7 @@ export class MeetingService {
     private agendesRepo: AgendesRepository,
     private detailAgendesRepo: DetailAgendesRepository,
     private foodRepo: FoodRepository,
+    private userattendRepo: UserattendeesRepository,
   ) {}
 
   async findAll() {
@@ -257,9 +259,59 @@ export class MeetingService {
       // "detailMeeting": "รายละเอียดการประชุม"
     }
   }
-  async updatemeeting(id, dataAgenda, getLastdata, dataFood) {
-    // console.log(id, dataAgenda, getLastdata, dataFood);
-    const dataMeeting = {
+  async updatemeeting(id, dataAgenda, getLastdata, dataFood, oldFileupdate) {
+    console.log(id, dataAgenda, getLastdata, dataFood, oldFileupdate);
+
+    // console.log(dataAgenda?.userBoard);
+    const fileoverviwe = await this.fileRepo.deleteoverviwe(id);
+    if (fileoverviwe) {
+      oldFileupdate.map((x: any) => {
+        this.fileRepo.create(id, x.namefile, x.pathfile, 'fileOverviwe');
+      });
+    }
+
+    const newuserBoard = [];
+    dataAgenda?.userBoard.map((x: any) => {
+      newuserBoard.push({
+        username: x.username,
+        uuidprofile: x.uuidprofile,
+        idmeeting: id,
+        type: 'userBoard',
+        type_user: 'previous',
+        position: x.position,
+        phone: x.phone,
+        email: x.email,
+        model: x.usermodelname,
+        confirm: x.confirm === undefined ? false : true,
+        checkin: x.confirm === undefined ? false : true,
+        foodstatus: x.foodstatus === undefined ? false : true,
+        signature: x.signature,
+        username_eng: x.username_eng,
+        line: x.line,
+      });
+    });
+
+    const newuserAttendee = [];
+    dataAgenda?.userAttendee.map((x: any) => {
+      newuserAttendee.push({
+        username: x.username,
+        uuidprofile: x.uuidprofile,
+        idmeeting: id,
+        type: 'userAttendee',
+        type_user: 'previous',
+        position: x.position,
+        phone: x.phone,
+        email: x.email,
+        model: x.usermodelname,
+        confirm: x.confirm === undefined ? false : true,
+        checkin: x.confirm === undefined ? false : true,
+        foodstatus: x.foodstatus === undefined ? false : true,
+        signature: x.signature,
+        username_eng: x.username_eng,
+        line: x.line,
+      });
+    });
+    const newDataMeeting = {
       detail: dataAgenda.detailMeeting,
       title: dataAgenda.title,
       room: dataAgenda.room,
@@ -269,13 +321,75 @@ export class MeetingService {
       day: dataAgenda.date,
       starttime: dataAgenda.timeStart,
       endtime: dataAgenda.timeEnd,
-      uuid: dataAgenda.detailMeeting,
-      summarymeeting: dataAgenda.detailMeeting,
-      summarychecklist: dataAgenda.detailMeeting,
     };
+    const newDataAgendes: any = [];
+    getLastdata?.map((x: any) => {
+      newDataAgendes.push({
+        uuid: x.uuid,
+        agendes: x.agendas,
+        detailagendes: x.detail,
+        step: x.step,
+      });
+    });
 
-    console.log(dataAgenda?.userBoard);
-    // console.log(dataAgenda?.userAttendee);
-    // return this.fileRepo.update(id, dataMeeting);
+    const newDataAgendesDetail: any = [];
+    getLastdata?.map((x: any) => {
+      x?.detailAgendes.map((y: any) => {
+        newDataAgendesDetail.push({
+          idmeeting: y.idmeeting,
+          step: y.step,
+          idagendess: y.idagendess,
+          detail: y.detail,
+          type: null,
+        });
+      });
+    });
+
+    await this.meetingRepo.update(id, newDataMeeting);
+
+    const resultFood = await this.foodRepo.deletebyid(id);
+    if (resultFood) {
+      dataFood['fooddetail']?.map((x: any) => {
+        const data = {
+          uuid: id,
+          typefood: x.typefood,
+          namefood: x.namefood,
+        };
+        this.foodRepo.create(data);
+      });
+    }
+    // delete user or update
+    const resultDelete = this.userattendRepo.deletebyidmeeting(id);
+    if (resultDelete) {
+      this.userattendRepo.createMany(newuserBoard);
+      this.userattendRepo.createMany(newuserAttendee);
+    }
+
+    //update agendes
+    const resultAgendes = await this.agendesRepo.deletebyidmeeting(id);
+    if (resultAgendes) {
+      await this.agendesRepo.createmany(newDataAgendes);
+    }
+
+    //update agendes detail
+    const resultDetailagendes = await this.detailAgendesRepo.deletebyidmeeting(
+      id,
+    );
+    if (resultDetailagendes) {
+      await this.detailAgendesRepo.createmany({ data: newDataAgendesDetail });
+    }
+  }
+  async updatefileoverviwe(roomid: string, files: any) {
+    const path = `./files_all/file_overviwe/${roomid}/`;
+    const resultEpm = fs.mkdirSync(path, { recursive: true });
+    const step = null;
+    const type = 'fileOverviwe';
+    files.map((e) => {
+      fs.createWriteStream(`${path}/${e.originalname}`).write(e.buffer);
+    });
+    // insert data path file
+    files.map((e) => {
+      return this.fileRepo.create(roomid, e.originalname, path, type, step);
+    });
   }
 }
