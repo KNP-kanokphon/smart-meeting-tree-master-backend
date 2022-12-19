@@ -124,6 +124,20 @@ export class MeetingService {
       });
     }
   }
+  async deleteFileagenda(roomid: any, step: any, namefile: any) {
+    const path = `./files_all/file_agenda/${roomid}/${step}/${namefile}`;
+    const type = `fileAgenda`;
+    const result = await this.fileRepo.delete(roomid, step, namefile, type);
+    if (result) {
+      fs.unlink(path, (err) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log('File was successfully removed!');
+      });
+    }
+  }
   async findFoodFetail(roomid: any) {
     return this.foodRepo.findByid(roomid);
   }
@@ -242,5 +256,26 @@ export class MeetingService {
       // "timeEnd": "10:00:00",
       // "detailMeeting": "รายละเอียดการประชุม"
     }
+  }
+  async updatemeeting(id, dataAgenda, getLastdata, dataFood) {
+    // console.log(id, dataAgenda, getLastdata, dataFood);
+    const dataMeeting = {
+      detail: dataAgenda.detailMeeting,
+      title: dataAgenda.title,
+      room: dataAgenda.room,
+      floor: dataAgenda.floor,
+      building: dataAgenda.building,
+      meetingplace: dataAgenda.meetingPlace,
+      day: dataAgenda.date,
+      starttime: dataAgenda.timeStart,
+      endtime: dataAgenda.timeEnd,
+      uuid: dataAgenda.detailMeeting,
+      summarymeeting: dataAgenda.detailMeeting,
+      summarychecklist: dataAgenda.detailMeeting,
+    };
+
+    console.log(dataAgenda?.userBoard);
+    // console.log(dataAgenda?.userAttendee);
+    // return this.fileRepo.update(id, dataMeeting);
   }
 }

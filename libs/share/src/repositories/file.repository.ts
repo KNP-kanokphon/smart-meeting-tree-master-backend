@@ -68,4 +68,21 @@ export class FileRepository {
       },
     });
   }
+  delete(
+    roomid: string,
+    step: string,
+    namefile: string,
+    type: string,
+    option?: { prisma?: TQueryClient },
+  ) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.files.deleteMany({
+      where: {
+        idmeeting: roomid,
+        step: step,
+        namefile: namefile,
+        type,
+      },
+    });
+  }
 }

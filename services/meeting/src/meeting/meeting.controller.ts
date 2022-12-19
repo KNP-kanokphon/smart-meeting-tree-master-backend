@@ -92,6 +92,20 @@ export class MeetingController {
   ) {
     return this.meetingService.updateroom(data, usersatd, userboard);
   }
+  @Post('updatemeeting')
+  updatemeeting(
+    @Body('id') id: any,
+    @Body('dataAgenda') dataAgenda: any,
+    @Body('getLastdata') getLastdata: any,
+    @Body('dataFood') dataFood: any,
+  ) {
+    return this.meetingService.updatemeeting(
+      id,
+      dataAgenda,
+      getLastdata,
+      dataFood,
+    );
+  }
   @Post()
   create(@Body() data: any) {
     return this.meetingService.create(data);
@@ -168,5 +182,13 @@ export class MeetingController {
   @Get('detailfood/:roomid')
   findFoodFetail(@Param('roomid') roomid: string) {
     return this.meetingService.findFoodFetail(roomid);
+  }
+  @Delete('agendafile/:roomid/:step/:namefile')
+  deleteFileagenda(
+    @Param('roomid') roomid: any,
+    @Param('step') step: any,
+    @Param('namefile') namefile: any,
+  ) {
+    return this.meetingService.deleteFileagenda(roomid, step, namefile);
   }
 }

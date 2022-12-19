@@ -42,4 +42,13 @@ export class MeetingRepository {
       },
     });
   }
+  async update(roomid: string, data: any, option?: { prisma?: TQueryClient }) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.meetings.updateMany({
+      where: {
+        uuid: roomid,
+      },
+      data,
+    });
+  }
 }

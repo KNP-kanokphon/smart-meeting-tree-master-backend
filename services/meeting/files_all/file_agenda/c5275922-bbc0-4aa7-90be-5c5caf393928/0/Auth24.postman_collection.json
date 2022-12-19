@@ -1,0 +1,919 @@
+{
+	"info": {
+		"_postman_id": "f6c8129f-a065-4495-8db1-bfee03117594",
+		"name": "Auth24",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15175944"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"should returns non error http code\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"accessToken\", jsonData.access_token);",
+							"    pm.environment.set(\"refreshToken\", jsonData.refreshToken);",
+							"    pm.expect(pm.response.code).to.be.below(400)",
+							"});",
+							"",
+							"pm.test(`Response time is less than ${pm.environment.get(\"expectedResponseTimeInMs\")}ms`, function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get(\"expectedResponseTimeInMs\")));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"nat@enersys.co.th\",\n    \"password\": \"p@ssw0rd1234\",\n    \"sessionId\": \"{{sessionId}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Local Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"should returns non error http code\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"accessToken\", jsonData.access_token);",
+							"    pm.environment.set(\"refreshToken\", jsonData.refreshToken);",
+							"    pm.expect(pm.response.code).to.be.below(400)",
+							"});",
+							"",
+							"pm.test(`Response time is less than ${pm.environment.get(\"expectedResponseTimeInMs\")}ms`, function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get(\"expectedResponseTimeInMs\")));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"employeeId\": \"admin\",\n    \"password\": \"P@ssw0rd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/local-login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"local-login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OAuthRequest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"should returns non error http code\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(pm.response.code).to.be.below(400)",
+							"});",
+							"",
+							"pm.test(`Response time is less than ${pm.environment.get(\"expectedResponseTimeInMs\")}ms`, function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get(\"expectedResponseTimeInMs\")));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/auth/authorize?response_type=code&client_id=13054b3b-66ce-435e-aafd-6d233e242ea7&redirect_uri=http://localhost:8081&scope=read&state={{sessionId}}&code_challenge={{sha256}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"authorize"
+					],
+					"query": [
+						{
+							"key": "response_type",
+							"value": "code"
+						},
+						{
+							"key": "client_id",
+							"value": "13054b3b-66ce-435e-aafd-6d233e242ea7"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "http://localhost:8081"
+						},
+						{
+							"key": "scope",
+							"value": "read"
+						},
+						{
+							"key": "state",
+							"value": "{{sessionId}}"
+						},
+						{
+							"key": "code_challenge",
+							"value": "{{sha256}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateOAuthClient",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"should returns non error http code\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"clientId\", jsonData.clientId);",
+							"    pm.expect(pm.response.code).to.be.below(400)",
+							"});",
+							"",
+							"pm.test(`Response time is less than ${pm.environment.get(\"expectedResponseTimeInMs\")}ms`, function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get(\"expectedResponseTimeInMs\")));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "admin-key",
+						"value": "verylongsupersecretadminapikey",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"client_name\": \"local_client\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/client",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"client"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddRedirectUrl",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"should returns non error http code\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(pm.response.code).to.be.below(400)",
+							"});",
+							"",
+							"pm.test(`Response time is less than ${pm.environment.get(\"expectedResponseTimeInMs\")}ms`, function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get(\"expectedResponseTimeInMs\")));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "admin-key",
+						"value": "verylongsupersecretadminapikey",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"redirectUrls\": [\n    \"http://localhost:8081\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/client/{{clientId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"client",
+						"{{clientId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetOAuthClient",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"should returns non error http code\", function () {",
+							"    pm.expect(pm.response.code).to.be.below(400)",
+							"});",
+							"",
+							"pm.test(`Response time is less than ${pm.environment.get(\"expectedResponseTimeInMs\")}ms`, function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get(\"expectedResponseTimeInMs\")));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "admin-key",
+						"value": "verylongsupersecretadminapikey",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/client",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"client"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteOAuthClient",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"should returns non error http code\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(pm.response.code).to.be.below(400)",
+							"});",
+							"",
+							"pm.test(`Response time is less than ${pm.environment.get(\"expectedResponseTimeInMs\")}ms`, function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get(\"expectedResponseTimeInMs\")));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "admin-key",
+						"value": "verylongsupersecretadminapikey",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"client_name\": \"local_client\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/client/{{clientId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"client",
+						"{{clientId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateGroup",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "admin-key",
+						"value": "verylongsupersecretadminapikey",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"groupName\": \"csm_actor\",\n    \"roles\": [\"ACTOR\",\"csm_authenticated\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/group",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddRoleToGroup",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "admin-key",
+						"value": "verylongsupersecretadminapikey",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"groupName\": \"csm_branch\",\n    \"roles\": [\"super-admin\", \"csm_dpo\"]\n}   ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/group",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetGroup",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "admin-key",
+						"value": "verylongsupersecretadminapikey",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/group",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteGroup",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "admin-key",
+						"value": "verylongsupersecretadminapikey",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/group/super-admin",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"group",
+						"super-admin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUsers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "admin-key",
+						"value": "verylongsupersecretadminapikey",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/user",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUsers by Group",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "admin-key",
+						"value": "verylongsupersecretadminapikey",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/user?take=100&skip=0&group=csm_actor",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user"
+					],
+					"query": [
+						{
+							"key": "take",
+							"value": "100"
+						},
+						{
+							"key": "skip",
+							"value": "0"
+						},
+						{
+							"key": "group",
+							"value": "csm_actor"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUsers by Role",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "admin-key",
+						"value": "verylongsupersecretadminapikey",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/user?take=100&skip=0&group=csm_actor",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user"
+					],
+					"query": [
+						{
+							"key": "take",
+							"value": "100"
+						},
+						{
+							"key": "skip",
+							"value": "0"
+						},
+						{
+							"key": "group",
+							"value": "csm_actor"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddUserToGroup",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "admin-key",
+						"value": "verylongsupersecretadminapikey",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"groups\": [\"csm_actor\", \"csm_actor\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/user/csm_actor2",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						"csm_actor2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "admin-key",
+						"value": "verylongsupersecretadminapikey",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"employeeId\": \"csm_actor2\",\n    \"email\": \"supaket@gmail.com\",     \n    \"password\": \"P@ssw0rd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/user/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateRole",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "admin-key",
+						"value": "verylongsupersecretadminapikey",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"roleName\": \"BRANCH\",\n    \"description\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/role",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetRoles",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "admin-key",
+						"value": "verylongsupersecretadminapikey",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/role",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteRole",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "admin-key",
+						"value": "verylongsupersecretadminapikey",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/role/super-admin/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"role",
+						"super-admin",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RefreshToken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"should returns non error http code\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"accessToken\", jsonData.access_token);",
+							"    pm.environment.set(\"refreshToken\", jsonData.refreshToken);",
+							"    pm.expect(pm.response.code).to.be.below(400)",
+							"});",
+							"",
+							"pm.test(`Response time is less than ${pm.environment.get(\"expectedResponseTimeInMs\")}ms`, function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(Number(pm.environment.get(\"expectedResponseTimeInMs\")));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"refreshToken\": \"{{refreshToken}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/auth/refresh",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUBLIC GET USER BY EMPLOYEE",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"const uuid = require('uuid');",
+					"pm.environment.set(\"sessionId\", uuid.v4());",
+					"",
+					"const sha256digest = CryptoJS.SHA256(uuid.v4());",
+					"const base64sha256 = CryptoJS.enc.Base64.stringify(sha256digest);",
+					"pm.environment.set(\"sha256\", base64sha256);",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
