@@ -75,6 +75,8 @@ model user {
   position_guild    Json?   @db.Json
   guild             String? @db.VarChar(100)
   others            String? @db.VarChar(100)
+  age               String? @db.VarChar(100)
+  prefixtitleeng    String? @db.VarChar(100)
 }
 
 model address {
