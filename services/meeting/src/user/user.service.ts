@@ -40,7 +40,10 @@ export class UserService {
   }
 
   async updateUser(userid: string, data: any) {
-    return this.userRepo.updateUser(userid, data);
+    console.log('userid', userid);
+    console.log('data', data);
+
+    // return this.userRepo.updateUser(userid, data);
   }
 }
 

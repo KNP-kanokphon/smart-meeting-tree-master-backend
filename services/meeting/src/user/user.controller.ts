@@ -31,14 +31,17 @@ export class UserController {
   create(@Body() data: Prisma.userCreateManyInput) {
     return this.userService.create(data);
   }
+
   @Get()
   findAll() {
     return this.userService.findAll();
   }
+
   @Get('findbyid/:userid')
   findUser(@Param('userid') userid: any) {
     return this.userService.findUser(userid);
   }
+
   @Post('importuser')
   importusers(@Body() data: string[]) {
     return this.userService.importusers(data);
@@ -51,8 +54,6 @@ export class UserController {
 
   @Put('updateuser/:uuid')
   updateUser(@Body('data') data: any, @Param('uuid') uuid: string) {
-    console.log(data);
-    console.log(uuid);
     return this.userService.updateUser(uuid, data);
   }
 }
