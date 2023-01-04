@@ -37,11 +37,17 @@ export class FileRepository {
     };
     return prisma.files.create({ data });
   }
-  async getFileByid(roomid: string, option?: { prisma?: TQueryClient }) {
+  async getFileByid(
+    roomid: string,
+    filename: string,
+    option?: { prisma?: TQueryClient },
+  ) {
     const prisma = option?.prisma ?? this.prisma;
     return prisma.files.findMany({
       where: {
         idmeeting: roomid,
+        namefile: filename,
+        type: 'fileOverviwe',
       },
     });
   }

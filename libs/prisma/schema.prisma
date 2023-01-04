@@ -23,6 +23,7 @@ model meetings {
   uuid             String  @db.VarChar(255)
   summarymeeting   String? @db.Text
   summarychecklist Boolean @db.Boolean
+  gift             Boolean @db.Boolean
 }
 
 model contacts {
