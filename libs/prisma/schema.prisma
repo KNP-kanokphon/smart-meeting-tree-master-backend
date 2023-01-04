@@ -25,7 +25,7 @@ model meetings {
   summarychecklist Boolean @db.Boolean
 }
 
-model user {
+model contacts {
   id                Int     @id @default(autoincrement())
   uuid              String  @db.VarChar(100)
   username          String  @db.VarChar(100)
@@ -126,7 +126,7 @@ model listname {
   uuid        String  @db.VarChar(250)
   username    String  @db.VarChar(250)
   phone       String? @db.VarChar(250)
-  type        String  @db.VarChar(20)
+  group       String  @db.VarChar(20)
   course      Json?   @db.Json
   position    String? @db.VarChar(250)
   positionkpi String? @db.VarChar(250)

@@ -43,7 +43,7 @@ export class ListnameRepository {
       data: {
         username: data.username,
         phone: data.phone,
-        type: data.type,
+        group: data.group,
         course: data.course,
         position: data.position,
         positionkpi: data.positionkpi,

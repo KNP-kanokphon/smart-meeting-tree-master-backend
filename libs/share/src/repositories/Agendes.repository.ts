@@ -43,7 +43,7 @@ export class AgendesRepository {
     });
   }
   async createmany(
-    data: Prisma.userCreateManyInput,
+    data: Prisma.contactsCreateManyInput,
     option?: { prisma?: TQueryClient },
   ) {
     const prisma = option?.prisma ?? this.prisma;

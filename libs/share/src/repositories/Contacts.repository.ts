@@ -1,7 +1,7 @@
 import { PrismaService } from '../modules/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { TQueryClient } from '../modules/prisma/types';
-import { user, Prisma } from '@prisma/client';
+import { contacts, Prisma } from '@prisma/client';
 
 @Injectable()
 export class UserRepository {
@@ -9,31 +9,31 @@ export class UserRepository {
 
   async findAll(option?: { prisma?: TQueryClient }) {
     const prisma = option?.prisma ?? this.prisma;
-    return prisma.user.findMany();
+    return prisma.contacts.findMany();
   }
   async create(
-    data: Prisma.userCreateManyInput,
+    data: Prisma.contactsCreateManyInput,
     option?: { prisma?: TQueryClient },
   ) {
     const prisma = option?.prisma ?? this.prisma;
-    return prisma.user.create({ data });
+    return prisma.contacts.create({ data });
   }
   async importuser(
-    data: Prisma.userCreateManyInput,
+    data: Prisma.contactsCreateManyInput,
     option?: { prisma?: TQueryClient },
   ) {
     const prisma = option?.prisma ?? this.prisma;
-    return prisma.user.createMany({ data });
+    return prisma.contacts.createMany({ data });
   }
   findById(
-    data: Prisma.userCreateManyInput,
+    data: Prisma.contactsCreateManyInput,
     userid: string,
     option?: {
       prisma?: TQueryClient;
     },
   ) {
     const prisma = option?.prisma ?? this.prisma;
-    return prisma.user.findMany({
+    return prisma.contacts.findMany({
       where: {
         uuid: userid,
       },
@@ -42,7 +42,7 @@ export class UserRepository {
   async deleteUser(uuid: any, option?: { prisma?: TQueryClient }) {
     console.log(uuid);
     const prisma = option?.prisma ?? this.prisma;
-    return prisma.user.deleteMany({
+    return prisma.contacts.deleteMany({
       where: {
         uuid: uuid,
       },
@@ -50,7 +50,7 @@ export class UserRepository {
   }
   async updateUser(uuid: any, data: any, option?: { prisma?: TQueryClient }) {
     const prisma = option?.prisma ?? this.prisma;
-    return prisma.user.updateMany({
+    return prisma.contacts.updateMany({
       where: {
         uuid: uuid,
       },
