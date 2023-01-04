@@ -227,5 +227,6 @@ model userpartyhistory {
 
 model group {
   id        Int    @id @default(autoincrement())
+  uuidgroup String @db.VarChar(255)
   namegroup String @db.VarChar(255)
 }
