@@ -78,6 +78,7 @@ model user {
   age               String? @db.VarChar(100)
   prefixtitleeng    String? @db.VarChar(100)
   idgroup           String? @db.VarChar(100)
+  remark            String? @db.VarChar(200)
 }
 
 model address {
