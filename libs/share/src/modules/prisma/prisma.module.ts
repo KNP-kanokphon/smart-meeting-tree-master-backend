@@ -11,6 +11,7 @@ import { FoodRepository } from '../../repositories/Foodinmeeting.repository';
 import { PositionRepository } from '../../repositories/Position.repository';
 import { UserpartyRepository } from '../../repositories/Userparty.repository';
 import { UserpartyhistoryRepository } from '../../repositories/Userpartyhistory.repository';
+import { GroupRepository } from '../../repositories/Gruop.repository';
 
 const services = [
   PrismaService,
@@ -25,6 +26,7 @@ const services = [
   PositionRepository,
   UserpartyRepository,
   UserpartyhistoryRepository,
+  GroupRepository,
 ];
 @Module({
   providers: [...services],

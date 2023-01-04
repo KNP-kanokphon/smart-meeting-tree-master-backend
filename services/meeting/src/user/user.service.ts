@@ -7,6 +7,7 @@ import {
   PositionRepository,
   UserpartyRepository,
   UserpartyhistoryRepository,
+  GroupRepository,
 } from '@d-debt/share';
 import { Prisma } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
@@ -54,6 +55,7 @@ export class UserattendeesService {
     private userRepo: UserRepository,
     private listnameRepo: ListnameRepository,
     private positionRepo: PositionRepository,
+    private groupRepo: GroupRepository,
   ) {}
 
   findAll() {
@@ -160,6 +162,20 @@ export class UserattendeesService {
   async updateUserDetail(roomid: any, userId: any, data: any) {
     return await this.userattendeesRepo.updateUserDetail(roomid, userId, data);
   }
+  async GroupAll() {
+    return await this.groupRepo.findAll();
+  }
+  async CreateGroup(data: any) {
+    return await this.groupRepo.create(data);
+  }
+  async DeleteGroup(data: any) {
+    return await this.groupRepo.deletegroup(data);
+  }
+  async UpdateGroup(data: any, uuid: any) {
+    console.log(await this.groupRepo.update(uuid, data));
+
+    return await this.groupRepo.update(uuid, data);
+  }
 }
 
 @Injectable()
@@ -179,7 +195,7 @@ export class UserPartyService {
     return await this.userpartyRepo.findUser(userid);
   }
   async update(userid: string) {
-    return await this.userpartyRepo.update(userid);
+    // return await this.userpartyRepo.update(userid);
   }
   async updateuserparty(userid: string) {
     const userDetail: any = await this.userpartyRepo.findUser(userid);

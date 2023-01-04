@@ -109,6 +109,11 @@ export class UserattendController {
   async getCourseAll() {
     return this.userattendeesService.getCourseAll();
   }
+
+  @Get('groupalls')
+  GroupAll() {
+    return this.userattendeesService.GroupAll();
+  }
   @Post('byuser')
   createMany(@Body() data: Prisma.userattendeesCreateManyInput) {
     return {
@@ -192,7 +197,7 @@ export class UserattendController {
     @Param('roomid') roomid: string,
     @Param('userid') userid: string,
   ) {
-    console.log(data);
+    // console.log(data);
     return this.userattendeesService.updateUserDetail(roomid, userid, data);
   }
 
@@ -202,5 +207,18 @@ export class UserattendController {
     @Param('filetype') filetype: string,
   ) {
     return this.userattendeesService.importPosition(data, filetype);
+  }
+
+  @Post('create/group')
+  CreateGroup(@Body() data: any) {
+    return this.userattendeesService.CreateGroup(data);
+  }
+  @Put('updateGroup/:uuid')
+  UpdateGroup(@Body('data') data: any, @Param('uuid') uuid: string) {
+    return this.userattendeesService.UpdateGroup(data, uuid);
+  }
+  @Delete('delete/group/:uuid')
+  async DeleteGroup(@Param('uuid') uuid: any) {
+    return this.userattendeesService.DeleteGroup(uuid);
   }
 }

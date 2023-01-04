@@ -9,3 +9,4 @@ export * from './Foodinmeeting.repository';
 export * from './Position.repository';
 export * from './Userparty.repository';
 export * from './Userpartyhistory.repository';
+export * from './Gruop.repository';
