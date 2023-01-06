@@ -81,7 +81,11 @@ export class MeetingController {
     @Param('step') step: string,
     @Param('namefile') namefile: string,
   ) {
-    return this.meetingService.getfilestep(roomid, step, namefile);
+    const data = fs.readFileSync(
+      `./files_all/file_agenda/${roomid}/${step}/${namefile}`,
+    );
+    return Buffer.from(data);
+    // return this.meetingService.getfilestep(roomid, step, namefile);
   }
   @Get('agenda/:roomid')
   findAgendaByid(@Param('roomid') roomid: string) {

@@ -49,18 +49,18 @@ export class MeetingService {
       endtime: data.endtime,
       uuid: data.uuid,
       summarychecklist: false,
-      gift: data.gift,
+      gift: data.gift === null || data.gift === undefined ? false : data.gift,
     };
-    console.log(meetingData);
-
-    data['dataFood'].map((e) => {
-      const foodData = {
-        uuid: data.uuid,
-        typefood: e.typefood,
-        namefood: e.namefood,
-      };
-      this.foodRepo.create(foodData);
-    });
+    if (data['dataFood'] === undefined) {
+      data['dataFood'].map((e) => {
+        const foodData = {
+          uuid: data.uuid,
+          typefood: e.typefood,
+          namefood: e.namefood,
+        };
+        this.foodRepo.create(foodData);
+      });
+    }
 
     return this.meetingRepo.create(meetingData);
   }
@@ -82,10 +82,6 @@ export class MeetingService {
     return this.fileRepo.getFileByid(idmeeting, namefile);
   }
   async getfilestep(idmeeting: string, step: any, namefile: any) {
-    console.log(idmeeting);
-    console.log(step);
-    console.log(namefile);
-
     return this.fileRepo.getfilestep(idmeeting, step, namefile);
   }
   async getPathFilePdf(idmeeting: string) {
