@@ -66,7 +66,8 @@ export class MeetingService {
           type: '',
           type_user: x.type_user,
           foodstatus: false,
-          position: `'${x?.position}'`,
+          position: x.uuidposition,
+          uuidposition: x.uuidposition,
         };
         await this.userattendRepo.createMany(dataNew);
       });
@@ -78,8 +79,6 @@ export class MeetingService {
           detailagendes: x.detail,
           step: String(step),
         };
-        console.log(dataAgende);
-
         await this.agendesRepo.create(dataAgende);
       });
 

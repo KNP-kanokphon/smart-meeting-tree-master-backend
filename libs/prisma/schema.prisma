@@ -80,6 +80,7 @@ model contacts {
   prefixtitleeng    String? @db.VarChar(100)
   idgroup           String? @db.VarChar(100)
   remark            String? @db.VarChar(200)
+  uuidposition      Json?   @db.Json
 }
 
 model address {
@@ -164,7 +165,7 @@ model userattendees {
   idmeeting    String  @db.VarChar(255)
   type         String? @db.VarChar(255)
   type_user    String  @db.VarChar(255)
-  position     String? @db.VarChar(255)
+  position     Json?   @db.Json
   phone        String? @db.VarChar(255)
   email        String? @db.VarChar(255)
   model        String? @db.VarChar(255)
@@ -174,6 +175,7 @@ model userattendees {
   signature    String? @db.VarChar()
   username_eng String? @db.VarChar(250)
   line         String? @db.VarChar(250)
+  uuidposition Json?   @db.Json
 }
 
 model agendes {

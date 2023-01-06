@@ -25,7 +25,7 @@ export class UserService {
   findAll() {
     return this.userRepo.findAll();
   }
-  async create(data: Prisma.userCreateManyInput) {
+  async create(data: Prisma.contactsCreateManyInput) {
     return this.userRepo.create(data);
   }
   async findUser(userid: string) {
@@ -41,9 +41,6 @@ export class UserService {
   }
 
   async updateUser(userid: string, data: any) {
-    // console.log('userid', userid);
-    // console.log('data', data);
-
     return this.userRepo.updateUser(userid, data);
   }
 }
