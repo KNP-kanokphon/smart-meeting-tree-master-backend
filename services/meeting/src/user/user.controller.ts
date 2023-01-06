@@ -20,7 +20,7 @@ import * as papa from 'papaparse';
 import { AppErrorExceptionFilter } from '@d-debt/share';
 import { Prisma } from '@prisma/client';
 import { FileInterceptor } from '@nestjs/platform-express';
-const csv = require('csvtojson');
+// const csv = require('csvtojson');
 import { Express } from 'express';
 
 @Controller('user')
@@ -28,7 +28,7 @@ import { Express } from 'express';
 export class UserController {
   constructor(private readonly userService: UserService) {}
   @Post()
-  create(@Body() data: Prisma.userCreateManyInput) {
+  create(@Body() data: Prisma.contactsCreateManyInput) {
     return this.userService.create(data);
   }
 

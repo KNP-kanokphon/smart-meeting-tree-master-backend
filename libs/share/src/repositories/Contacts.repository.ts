@@ -4,7 +4,7 @@ import { TQueryClient } from '../modules/prisma/types';
 import { contacts, Prisma } from '@prisma/client';
 
 @Injectable()
-export class UserRepository {
+export class Contactsitory {
   constructor(private prisma: PrismaService) {}
 
   async findAll(option?: { prisma?: TQueryClient }) {
@@ -40,7 +40,6 @@ export class UserRepository {
     });
   }
   async deleteUser(uuid: any, option?: { prisma?: TQueryClient }) {
-    console.log(uuid);
     const prisma = option?.prisma ?? this.prisma;
     return prisma.contacts.deleteMany({
       where: {

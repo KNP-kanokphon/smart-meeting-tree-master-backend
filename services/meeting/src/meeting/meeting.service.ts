@@ -35,48 +35,112 @@ export class MeetingService {
     return this.meetingRepo.findByid(roomid);
   }
 
-  async create(data: Prisma.meetingsCreateManyInput) {
-    // Prisma.meetingCreateManyInput
+  async create(data: any) {
+    // console.log(data.newDataAgenda);
+    // console.log(data.newDataUser);
+    // console.log(data.dataDetail);
+
     const meetingData = {
-      detail: data.detail,
-      title: data.title,
-      room: data.room,
-      floor: data.floor,
-      building: data.building,
-      meetingplace: data.meetingplace,
-      day: data.day,
-      starttime: data.starttime,
-      endtime: data.endtime,
-      uuid: data.uuid,
+      detail: data.newDataAgenda.detailMeeting,
+      title: data.newDataAgenda.title,
+      room: data.newDataAgenda.room,
+      floor: data.newDataAgenda.floor,
+      building: data.newDataAgenda.building,
+      meetingplace: data.newDataAgenda.meetingPlace,
+      day: data.newDataAgenda.date,
+      starttime: data.newDataAgenda.timeStart,
+      endtime: data.newDataAgenda.timeEnd,
+      uuid: data.id,
       summarychecklist: false,
-      gift: data.gift === null || data.gift === undefined ? false : data.gift,
+      gift: data.dataFood.gift,
     };
-    if (data['dataFood'] === undefined) {
-      data['dataFood'].map((e) => {
-        const foodData = {
-          uuid: data.uuid,
-          typefood: e.typefood,
-          namefood: e.namefood,
+    const result = await this.meetingRepo.create(meetingData);
+    if (result) {
+      data.newDataUser.map(async (x: any) => {
+        const dataNew: any = {
+          username: x.username,
+          uuidprofile: x.uuidprofile,
+          idmeeting: data.id,
+          checkin: false,
+          confirm: false,
+          type: '',
+          type_user: x.type_user,
+          foodstatus: false,
+          position: `'${x?.position}'`,
         };
-        this.foodRepo.create(foodData);
+        await this.userattendRepo.createMany(dataNew);
+      });
+      data.dataDetail.agenda.map(async (x: any, i: number) => {
+        const step = i + 1;
+        const dataAgende = {
+          uuid: data.id,
+          agendes: x.title,
+          detailagendes: x.detail,
+          step: String(step),
+        };
+        console.log(dataAgende);
+
+        await this.agendesRepo.create(dataAgende);
+      });
+
+      data.dataDetail.agenda.map(async (x: any, i: number) => {
+        const step = i + 1;
+        const path = `./files_all/file_agenda/${data.id}/${step}/`;
+        const dataDetail = {
+          idmeeting: data.id,
+          step: String(step),
+          idagendess: String(step),
+          detail: x.detail,
+          type: null,
+          filepart: path,
+        };
+        // console.log(dataDetail);
+        await this.detailAgendesRepo.create(dataDetail);
+      });
+
+      data.dataFood.fooddetail.map(async (x: any) => {
+        const foodData = {
+          uuid: data.id,
+          typefood: x.typefood,
+          namefood: x.namefood,
+        };
+        await this.foodRepo.create(foodData);
       });
     }
-
-    return this.meetingRepo.create(meetingData);
   }
+
   async uploadfile(files: any, idmeeting: string) {
     const path = `./files_all/file_overviwe/${idmeeting}/`;
     const resultEpm = fs.mkdirSync(path, { recursive: true });
     const step = null;
     const type = 'fileOverviwe';
-    // save file path file
     files.map((e) => {
       fs.createWriteStream(`${path}/${e.originalname}`).write(e.buffer);
     });
-    // insert data path file
     files.map((e) => {
       return this.fileRepo.create(idmeeting, e.originalname, path, type, step);
     });
+  }
+
+  async saveagendafile(idmeeting: string, step: string, files: any) {
+    const newStep = Number(step) + 1;
+    if (files !== undefined || files !== '' || files !== null) {
+      const path = `./files_all/file_agenda/${idmeeting}/${newStep}/`;
+      const resultEpm = fs.mkdirSync(path, { recursive: true });
+      const type = 'fileAgenda';
+      files.map((e) => {
+        fs.createWriteStream(`${path}/${e.originalname}`).write(e.buffer);
+      });
+      files.map((e) => {
+        return this.fileRepo.create(
+          idmeeting,
+          e.originalname,
+          path,
+          type,
+          String(newStep),
+        );
+      });
+    }
   }
   async getFilePdf(idmeeting: string, namefile) {
     return this.fileRepo.getFileByid(idmeeting, namefile);
@@ -108,27 +172,7 @@ export class MeetingService {
       await this.detailAgendesRepo.create(data);
     });
   }
-  async saveagendafile(idmeeting: string, step: string, files: any) {
-    if (files !== undefined || files !== '' || files !== null) {
-      const path = `./files_all/file_agenda/${idmeeting}/${step}/`;
-      const resultEpm = fs.mkdirSync(path, { recursive: true });
-      const type = 'fileAgenda';
-      // save file path file
-      files.map((e) => {
-        fs.createWriteStream(`${path}/${e.originalname}`).write(e.buffer);
-      });
-      // insert data path file
-      files.map((e) => {
-        return this.fileRepo.create(
-          idmeeting,
-          e.originalname,
-          path,
-          type,
-          step,
-        );
-      });
-    }
-  }
+
   async deleteFileagenda(roomid: any, step: any, namefile: any) {
     const path = `./files_all/file_agenda/${roomid}/${step}/${namefile}`;
     const type = `fileAgenda`;

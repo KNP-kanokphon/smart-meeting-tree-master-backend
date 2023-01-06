@@ -1,6 +1,6 @@
 import {
   AppError,
-  UserRepository,
+  Contactsitory,
   UserattendeesRepository,
   ListnameRepository,
   FoodRepository,
@@ -18,7 +18,7 @@ import { el } from 'date-fns/locale';
 @Injectable()
 export class UserService {
   constructor(
-    private userRepo: UserRepository,
+    private userRepo: Contactsitory,
     private listnameRepo: ListnameRepository,
   ) {}
 
@@ -52,7 +52,7 @@ export class UserService {
 export class UserattendeesService {
   constructor(
     private userattendeesRepo: UserattendeesRepository,
-    private userRepo: UserRepository,
+    private userRepo: Contactsitory,
     private listnameRepo: ListnameRepository,
     private positionRepo: PositionRepository,
     private groupRepo: GroupRepository,
@@ -130,7 +130,7 @@ export class UserattendeesService {
     return await this.listnameRepo.createMany(data);
   }
   async getuserAll() {
-    return await this.listnameRepo.getuserAll();
+    return await this.userRepo.findAll();
   }
   async updateStatusUser(idmeeting: string, iduser: string) {
     return this.userattendeesRepo.updateStatusUser(idmeeting, iduser);

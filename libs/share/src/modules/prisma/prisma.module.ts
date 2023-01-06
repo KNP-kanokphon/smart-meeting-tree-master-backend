@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
-import { UserRepository } from '../../repositories/Contacts.repository';
+import { Contactsitory } from '../../repositories/Contacts.repository';
 import { MeetingRepository } from '../../repositories/Meeting.repository';
 import { UserattendeesRepository } from '../../repositories/Userattendees.repository';
 import { FileRepository } from '../../repositories/file.repository';
@@ -15,7 +15,7 @@ import { GroupRepository } from '../../repositories/Gruop.repository';
 
 const services = [
   PrismaService,
-  UserRepository,
+  Contactsitory,
   MeetingRepository,
   UserattendeesRepository,
   FileRepository,
