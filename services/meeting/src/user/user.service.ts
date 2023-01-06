@@ -41,14 +41,9 @@ export class UserService {
   }
 
   async updateUser(userid: string, data: any) {
-<<<<<<< HEAD
     // console.log('userid', userid);
     // console.log('data', data);
 
-=======
-    console.log('userid', userid);
-    console.log('data', data);
->>>>>>> 49b25101daa905e6a8bc93f67ea860afb918a90f
     return this.userRepo.updateUser(userid, data);
   }
 }
