@@ -25,6 +25,7 @@ export class FileRepository {
     path: string,
     type: string,
     step: string,
+    idfile: string,
     option?: { prisma?: TQueryClient },
   ) {
     const prisma = option?.prisma ?? this.prisma;
@@ -34,6 +35,7 @@ export class FileRepository {
       pathfile: path,
       type: type,
       step: step,
+      idfile: idfile,
     };
     return prisma.files.create({ data });
   }

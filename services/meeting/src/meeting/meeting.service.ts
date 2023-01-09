@@ -39,6 +39,7 @@ export class MeetingService {
     // console.log(data.newDataAgenda);
     // console.log(data.newDataUser);
     // console.log(data.dataDetail);
+    console.log(data.dataFood.gift);
 
     const meetingData = {
       detail: data.newDataAgenda.detailMeeting,
@@ -52,7 +53,7 @@ export class MeetingService {
       endtime: data.newDataAgenda.timeEnd,
       uuid: data.id,
       summarychecklist: false,
-      gift: data.dataFood.gift,
+      gift: data.dataFood.gift === undefined ? false : true,
     };
     const result = await this.meetingRepo.create(meetingData);
     if (result) {
@@ -96,28 +97,38 @@ export class MeetingService {
         // console.log(dataDetail);
         await this.detailAgendesRepo.create(dataDetail);
       });
-
-      data.dataFood.fooddetail.map(async (x: any) => {
-        const foodData = {
-          uuid: data.id,
-          typefood: x.typefood,
-          namefood: x.namefood,
-        };
-        await this.foodRepo.create(foodData);
-      });
+      if (data.dataFood.fooddetail !== undefined) {
+        data.dataFood.fooddetail.map(async (x: any) => {
+          const foodData = {
+            uuid: data.id,
+            typefood: x.typefood,
+            namefood: x.namefood,
+          };
+          await this.foodRepo.create(foodData);
+        });
+      }
     }
   }
 
-  async uploadfile(files: any, idmeeting: string) {
+  async uploadfile(files: any, idmeeting: string, namefile: string) {
     const path = `./files_all/file_overviwe/${idmeeting}/`;
     const resultEpm = fs.mkdirSync(path, { recursive: true });
     const step = null;
     const type = 'fileOverviwe';
-    files.map((e) => {
-      fs.createWriteStream(`${path}/${e.originalname}`).write(e.buffer);
+    files.map((e, i) => {
+      fs.createWriteStream(`${path}${idmeeting + i}.pdf`).write(e.buffer);
     });
-    files.map((e) => {
-      return this.fileRepo.create(idmeeting, e.originalname, path, type, step);
+    files.map((e, i) => {
+      // console.log(i);
+
+      return this.fileRepo.create(
+        idmeeting,
+        namefile,
+        path,
+        type,
+        step,
+        `${idmeeting + i}.pdf`,
+      );
     });
   }
 

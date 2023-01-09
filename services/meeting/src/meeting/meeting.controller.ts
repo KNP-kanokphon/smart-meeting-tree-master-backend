@@ -176,13 +176,14 @@ export class MeetingController {
   ): Promise<any> {
     return this.meetingService.updatefileoverviwe(idmeeting, files);
   }
-  @Post('/import/:id')
+  @Post('/import/:id/:namefile')
   @UseInterceptors(AnyFilesInterceptor())
   async upload(
     @UploadedFiles() files: Array<Express.Multer.File>,
     @Param('id') idmeeting: string,
+    @Param('namefile') namefile: string,
   ): Promise<any> {
-    return this.meetingService.uploadfile(files, idmeeting);
+    return this.meetingService.uploadfile(files, idmeeting, namefile);
   }
 
   @Post('/savesummarymeeting/:roomid')
