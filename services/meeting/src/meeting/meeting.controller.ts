@@ -47,10 +47,10 @@ export class MeetingController {
   ) {
     return this.meetingService.getFilePdf(roomid, namefile);
   }
-  @Get('getfileoverview/:roomid/:namefile')
+  @Post('getfileoverview')
   async getFile(
-    @Param('roomid') roomid: string,
-    @Param('namefile') namefile: string,
+    @Body('roomid') roomid: string,
+    @Body('namefile') namefile: string,
   ) {
     // const file = await this.meetingService.getFilePdf(roomid, namefile);
     // console.log(`/files_all/file_overviwe/${roomid}/${namefile}`);
@@ -63,6 +63,8 @@ export class MeetingController {
     //     // ...
     //   },
     // );
+    console.log(roomid);
+    console.log(namefile);
 
     const data = fs.readFileSync(
       `./files_all/file_overviwe/${roomid}/${namefile}`,
@@ -176,14 +178,15 @@ export class MeetingController {
   ): Promise<any> {
     return this.meetingService.updatefileoverviwe(idmeeting, files);
   }
-  @Post('/import/:id/:namefile')
+  @Post('/import/:id/:namefile/:idfile')
   @UseInterceptors(AnyFilesInterceptor())
   async upload(
     @UploadedFiles() files: Array<Express.Multer.File>,
     @Param('id') idmeeting: string,
     @Param('namefile') namefile: string,
+    @Param('idfile') idfile: string,
   ): Promise<any> {
-    return this.meetingService.uploadfile(files, idmeeting, namefile);
+    return this.meetingService.uploadfile(files, idmeeting, namefile, idfile);
   }
 
   @Post('/savesummarymeeting/:roomid')

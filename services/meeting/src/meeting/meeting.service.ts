@@ -110,24 +110,29 @@ export class MeetingService {
     }
   }
 
-  async uploadfile(files: any, idmeeting: string, namefile: string) {
+  async uploadfile(
+    files: any,
+    idmeeting: string,
+    namefile: string,
+    idfile: number,
+  ) {
     const path = `./files_all/file_overviwe/${idmeeting}/`;
     const resultEpm = fs.mkdirSync(path, { recursive: true });
     const step = null;
     const type = 'fileOverviwe';
-    files.map((e, i) => {
-      fs.createWriteStream(`${path}${idmeeting + i}.pdf`).write(e.buffer);
-    });
-    files.map((e, i) => {
-      // console.log(i);
+    console.log(`${path}${idmeeting + idfile}.pdf`);
 
+    fs.createWriteStream(`${path}${idmeeting + idfile}.pdf`).write(
+      files[0].buffer,
+    );
+    files.map((e, i) => {
       return this.fileRepo.create(
         idmeeting,
         namefile,
         path,
         type,
         step,
-        `${idmeeting + i}.pdf`,
+        `${idmeeting + idfile}.pdf`,
       );
     });
   }
