@@ -26,7 +26,6 @@ export class Contactsitory {
     return prisma.contacts.createMany({ data });
   }
   findById(
-    data: Prisma.contactsCreateManyInput,
     userid: string,
     option?: {
       prisma?: TQueryClient;

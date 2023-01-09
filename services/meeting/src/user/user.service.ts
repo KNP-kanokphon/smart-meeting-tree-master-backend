@@ -32,6 +32,10 @@ export class UserService {
     return await this.listnameRepo.findUser(userid);
   }
 
+  async findUserByID(userid: string) {
+    return await this.userRepo.findById(userid);
+  }
+
   async importusers(data: any) {
     return this.userRepo.importuser(data);
   }
@@ -59,9 +63,9 @@ export class UserattendeesService {
     return this.userRepo.findAll();
   }
 
-  findById(data: any, userid: string) {
-    return this.userRepo.findById(data, userid);
-  }
+  // findById(data: any, userid: string) {
+  //   return this.userRepo.findById(data, userid);
+  // }
 
   async updateUserbyID(data: any, userid: string) {
     return await this.listnameRepo.updateUserbyID(data, userid);

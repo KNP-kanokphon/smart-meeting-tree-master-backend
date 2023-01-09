@@ -31,7 +31,6 @@ export class UserController {
   create(@Body() data: Prisma.contactsCreateManyInput) {
     return this.userService.create(data);
   }
-
   @Get()
   findAll() {
     return this.userService.findAll();
@@ -40,6 +39,11 @@ export class UserController {
   @Get('findbyid/:userid')
   findUser(@Param('userid') userid: any) {
     return this.userService.findUser(userid);
+  }
+
+  @Get('finduserbyid/:userid')
+  findUserByID(@Param('userid') userid: any) {
+    return this.userService.findUserByID(userid);
   }
 
   @Post('importuser')
