@@ -178,6 +178,27 @@ export class UserattendController {
   ) {
     return this.userattendeesService.update(roomid, userid, status);
   }
+  @Put('updateUserDetail/:roomid/:userid')
+  updateUserDetail(
+    @Body('data') data: any,
+    @Param('roomid') roomid: string,
+    @Param('userid') userid: string,
+  ) {
+
+
+    return this.userattendeesService.updateUserDetail(roomid, userid, data);
+  }
+  @Put('updateUserNoomeet/:roomid/:userid')
+  updateUserNoMeet(
+    @Body('data') data: any,
+    @Param('roomid') roomid: string,
+    @Param('userid') userid: string,
+  ) {
+
+
+    return this.userattendeesService.updateUserNoMeet(roomid, userid, data);
+  }
+
   @Post('uploaduser')
   async updateUser(@Body('data') data: Prisma.listnameCreateManyInput) {
     return this.userattendeesService.importUser(data);
@@ -193,16 +214,6 @@ export class UserattendController {
   @Put('updateUserbyid/:userid')
   updateUserbyID(@Body('data') data: any, @Param('userid') userid: string) {
     return this.userattendeesService.updateUserbyID(data, userid);
-  }
-
-  @Put('updateUserDetail/:roomid/:userid')
-  updateUserDetail(
-    @Body('data') data: any,
-    @Param('roomid') roomid: string,
-    @Param('userid') userid: string,
-  ) {
-    // console.log(data);
-    return this.userattendeesService.updateUserDetail(roomid, userid, data);
   }
 
   @Post('import/position/:filetype')

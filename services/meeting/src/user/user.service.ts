@@ -163,6 +163,9 @@ export class UserattendeesService {
   async updateUserDetail(roomid: any, userId: any, data: any) {
     return await this.userattendeesRepo.updateUserDetail(roomid, userId, data);
   }
+  async updateUserNoMeet(roomid: any, userId: any, data: any) {
+    return await this.userattendeesRepo.updateUserNoMeet(roomid, userId, data);
+  }
   async GroupAll() {
     return await this.groupRepo.findAll();
   }
@@ -173,8 +176,6 @@ export class UserattendeesService {
     return await this.groupRepo.deletegroup(data);
   }
   async UpdateGroup(data: any, uuid: any) {
-    console.log(await this.groupRepo.update(uuid, data));
-
     return await this.groupRepo.update(uuid, data);
   }
 }
