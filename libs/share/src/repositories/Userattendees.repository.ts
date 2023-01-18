@@ -120,10 +120,7 @@ export class UserattendeesRepository {
       },
     });
   }
-  async deletebyidmeeting(
-    idroomid: string,
-    option?: { prisma?: TQueryClient },
-  ) {
+  async delete(idroomid: string, option?: { prisma?: TQueryClient }) {
     const prisma = option?.prisma ?? this.prisma;
     return prisma.userattendees.deleteMany({
       where: {

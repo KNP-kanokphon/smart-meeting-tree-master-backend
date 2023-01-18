@@ -1,6 +1,6 @@
 import {
   AppError,
-  Contactsitory,
+  ContactRepository,
   UserattendeesRepository,
   ListnameRepository,
   FoodRepository,
@@ -18,34 +18,34 @@ import { el } from 'date-fns/locale';
 @Injectable()
 export class UserService {
   constructor(
-    private userRepo: Contactsitory,
+    private contactRepo: ContactRepository,
     private listnameRepo: ListnameRepository,
   ) {}
 
   findAll() {
-    return this.userRepo.findAll();
+    return this.contactRepo.findAll();
   }
   async create(data: Prisma.contactsCreateManyInput) {
-    return this.userRepo.create(data);
+    return this.contactRepo.create(data);
   }
   async findUser(userid: string) {
     return await this.listnameRepo.findUser(userid);
   }
 
   async findUserByID(userid: string) {
-    return await this.userRepo.findById(userid);
+    return await this.contactRepo.findById(userid);
   }
 
   async importusers(data: any) {
-    return this.userRepo.importuser(data);
+    return this.contactRepo.importuser(data);
   }
 
   async deleteUser(uuid: any) {
-    return this.userRepo.deleteUser(uuid);
+    return this.contactRepo.deleteUser(uuid);
   }
 
   async updateUser(userid: string, data: any) {
-    return this.userRepo.updateUser(userid, data);
+    return this.contactRepo.updateUser(userid, data);
   }
 }
 
@@ -53,14 +53,14 @@ export class UserService {
 export class UserattendeesService {
   constructor(
     private userattendeesRepo: UserattendeesRepository,
-    private userRepo: Contactsitory,
+    private contactRepo: ContactRepository,
     private listnameRepo: ListnameRepository,
     private positionRepo: PositionRepository,
     private groupRepo: GroupRepository,
   ) {}
 
   findAll() {
-    return this.userRepo.findAll();
+    return this.contactRepo.findAll();
   }
 
   // findById(data: any, userid: string) {
@@ -131,7 +131,7 @@ export class UserattendeesService {
     return await this.listnameRepo.createMany(data);
   }
   async getuserAll() {
-    return await this.userRepo.findAll();
+    return await this.contactRepo.findAll();
   }
   async updateStatusUser(idmeeting: string, iduser: string) {
     return this.userattendeesRepo.updateStatusUser(idmeeting, iduser);

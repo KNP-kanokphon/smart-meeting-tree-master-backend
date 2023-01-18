@@ -34,7 +34,7 @@ export class AgendesRepository {
       },
     });
   }
-  async deletebyidmeeting(roomid: string, option?: { prisma?: TQueryClient }) {
+  async delete(roomid: string, option?: { prisma?: TQueryClient }) {
     const prisma = option?.prisma ?? this.prisma;
     return prisma.agendes.deleteMany({
       where: {

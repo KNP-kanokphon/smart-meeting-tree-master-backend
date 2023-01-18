@@ -184,17 +184,18 @@ model agendes {
   agendes       String? @db.VarChar(255)
   detailagendes String? @db.VarChar(255)
   step          String? @db.VarChar(255)
+  partfiles     String? @db.VarChar(255)
 }
 
-model detailagendes {
-  id         Int     @id @default(autoincrement())
-  idmeeting  String  @db.VarChar(255)
-  step       String? @db.VarChar(255)
-  idagendess String? @db.VarChar(255)
-  detail     String? @db.VarChar(255)
-  type       String? @db.VarChar(255)
-  filepart   String? @db.VarChar(255)
-}
+// model detailagendes {
+//   id         Int     @id @default(autoincrement())
+//   idmeeting  String  @db.VarChar(255)
+//   step       String? @db.VarChar(255)
+//   idagendess String? @db.VarChar(255)
+//   detail     String? @db.VarChar(255)
+//   type       String? @db.VarChar(255)
+//   filepart   String? @db.VarChar(255)
+// }
 
 model foodinmeeting {
   id       Int     @id @default(autoincrement())

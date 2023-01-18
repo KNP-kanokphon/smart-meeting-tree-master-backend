@@ -4,7 +4,7 @@ import { TQueryClient } from '../modules/prisma/types';
 import { contacts, Prisma } from '@prisma/client';
 
 @Injectable()
-export class Contactsitory {
+export class ContactRepository {
   constructor(private prisma: PrismaService) {}
 
   async findAll(option?: { prisma?: TQueryClient }) {
