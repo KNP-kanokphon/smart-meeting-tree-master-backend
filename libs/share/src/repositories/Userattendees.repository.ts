@@ -120,6 +120,35 @@ export class UserattendeesRepository {
       },
     });
   }
+  async updateUserNoMeet(
+    idmeeting: any,
+    iduser: any,
+    data: any,
+    option?: { prisma?: TQueryClient },
+  ) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.userattendees.updateMany({
+      where: {
+        uuidprofile: iduser,
+        idmeeting: idmeeting,
+      },
+      data: {
+        confirm: data.confirm,
+        checkin: data.checkin,
+      },
+    });
+  }
+  async deletebyidmeeting(
+    idroomid: string,
+    option?: { prisma?: TQueryClient },
+  ) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.userattendees.deleteMany({
+      where: {
+        idmeeting: idroomid,
+      },
+    });
+  }
   async delete(idroomid: string, option?: { prisma?: TQueryClient }) {
     const prisma = option?.prisma ?? this.prisma;
     return prisma.userattendees.deleteMany({
