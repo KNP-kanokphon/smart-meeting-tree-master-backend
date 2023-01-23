@@ -12,6 +12,7 @@ import {
 import { Prisma } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
 import { el } from 'date-fns/locale';
+import { async } from 'rxjs';
 // import { CreateUserDto } from './dto/create-user.dto';
 // import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -20,6 +21,8 @@ export class UserService {
   constructor(
     private contactRepo: ContactRepository,
     private listnameRepo: ListnameRepository,
+    private positionRepo: PositionRepository,
+    private userattendeesRepo: UserattendeesRepository,
   ) {}
 
   findAll() {
@@ -47,6 +50,80 @@ export class UserService {
   async updateUser(userid: string, data: any) {
     return this.contactRepo.updateUser(userid, data);
   }
+  async loginbyphonenumber(phonenumber: string, idroom: string) {
+    function replacePhoneNumber(phoneNumber) {
+      return phoneNumber.replace(/[^0-9]/g, '');
+    }
+
+    function checkForCharacters(inputString) {
+      let newdata;
+      if (inputString.includes('\n')) {
+        newdata = inputString.split('\n');
+      }
+
+      if (inputString.includes(',')) {
+        newdata = inputString.split(',');
+      }
+      return newdata;
+    }
+
+    const result = await this.contactRepo.loginbyphonenumber();
+    // function mapposition(idposition) {
+    //   if (idposition.length > 0) {
+    //   } else {
+    //     idposition.map(async (x: any) => {
+    //       console.log(await this.positionRepo.findbyid(x));
+    //     });
+    //   }
+    // }
+    // console.log(result);
+
+    const dataAll = [];
+    result.map((x: any) => {
+      if (x.phonenumber.includes('\n') || x.phonenumber.includes(',')) {
+        checkForCharacters(x.phonenumber).map((e: any) => {
+          dataAll.push({
+            uuid: x.uuid,
+            username: x.username,
+            phonenumber: replacePhoneNumber(e),
+            prefix: x.prefix,
+            course: x.course,
+            uuidposition: x.uuidposition,
+          });
+        });
+      } else {
+        dataAll.push({
+          uuid: x.uuid,
+          username: x.username,
+          phonenumber: replacePhoneNumber(x.phonenumber),
+          prefix: x.prefix,
+          course: x.course,
+          uuidposition: x.uuidposition,
+        });
+      }
+    });
+    const resultfilter = dataAll.filter(
+      (x: any) =>
+        String(x.phonenumber) === String(replacePhoneNumber(phonenumber)),
+    );
+    const dataFilter = [];
+    const resultUseratd = await this.userattendeesRepo.findUserInroom(idroom);
+    resultUseratd.map((x: any) => {
+      if (String(resultfilter[0].uuid) === String(x.uuidprofile)) {
+        dataFilter.push({
+          uuid: resultfilter[0].uuid,
+          username: resultfilter[0].username,
+          phonenumber: resultfilter[0].phonenumber,
+          prefix: resultfilter[0].prefix,
+          course: resultfilter[0].course,
+          uuidposition: resultfilter[0].uuidposition,
+        });
+      }
+    });
+    console.log(dataFilter);
+
+    return dataFilter;
+  }
 }
 
 @Injectable()
@@ -62,10 +139,6 @@ export class UserattendeesService {
   findAll() {
     return this.contactRepo.findAll();
   }
-
-  // findById(data: any, userid: string) {
-  //   return this.userRepo.findById(data, userid);
-  // }
 
   async updateUserbyID(data: any, userid: string) {
     return await this.listnameRepo.updateUserbyID(data, userid);
@@ -149,11 +222,17 @@ export class UserattendeesService {
   async getCourseAll() {
     return await this.positionRepo.findallCourse();
   }
-  async updateFood(roomid: any, userid: any, status: boolean) {
+  async updateFood(
+    roomid: any,
+    userid: any,
+    statusfood: boolean,
+    statusgift: boolean,
+  ) {
     return await this.userattendeesRepo.updatefoodUser(
       roomid,
       userid,
-      Boolean(status),
+      statusfood,
+      statusgift,
     );
   }
   async deletePosition(uuid: any) {
@@ -177,6 +256,17 @@ export class UserattendeesService {
   }
   async UpdateGroup(data: any, uuid: any) {
     return await this.groupRepo.update(uuid, data);
+  }
+  async getstatusprofile(roomid: string, userid: string) {
+    return await this.userattendeesRepo.findbyid(roomid, userid);
+    // console.log(userid);
+  }
+  async updatestatuscheckin(roomid, userid, statuschckin) {
+    return await this.userattendeesRepo.updatestatuscheckin(
+      roomid,
+      userid,
+      statuschckin,
+    );
   }
 }
 

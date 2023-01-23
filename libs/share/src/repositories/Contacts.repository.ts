@@ -55,4 +55,8 @@ export class ContactRepository {
       data: data,
     });
   }
+  async loginbyphonenumber(option?: { prisma?: TQueryClient }) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.contacts.findMany();
+  }
 }

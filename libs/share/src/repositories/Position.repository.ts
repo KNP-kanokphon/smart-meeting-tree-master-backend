@@ -3,6 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { TQueryClient } from '../modules/prisma/types';
 import { position, course, Prisma } from '@prisma/client';
 import id from 'date-fns/locale/id';
+import { async } from 'rxjs';
+import { el } from 'date-fns/locale';
 
 @Injectable()
 export class PositionRepository {
@@ -28,8 +30,6 @@ export class PositionRepository {
   }
 
   async deletePosition(uuid: any, option?: { prisma?: TQueryClient }) {
-    console.log(uuid);
-
     const prisma = option?.prisma ?? this.prisma;
     return prisma.position.deleteMany({
       where: {
@@ -47,5 +47,20 @@ export class PositionRepository {
   async findallCourse(option?: { prisma?: TQueryClient }) {
     const prisma = option?.prisma ?? this.prisma;
     return prisma.course.findMany();
+  }
+  async findbyid(uuid: any, option?: { prisma?: TQueryClient }) {
+    const prisma = option?.prisma ?? this.prisma;
+    // console.log(uuid);
+    if (uuid.length > 0) {
+      if (uuid.length > 1) {
+        uuid.map(async (x: any) => {
+          return await prisma.position.findMany({ where: { uuid: x } });
+        });
+      } else {
+        return await prisma.position.findMany({ where: { uuid: uuid[0] } });
+      }
+    }
+
+    // return prisma.position.findMany({ where: { uuid: uuid } });
   }
 }

@@ -96,7 +96,10 @@ export class UserPartyController {
 @Controller('userattendees')
 @UseFilters(AppErrorExceptionFilter)
 export class UserattendController {
-  constructor(private readonly userattendeesService: UserattendeesService) {}
+  constructor(
+    private readonly userattendeesService: UserattendeesService,
+    private readonly userService: UserService,
+  ) {}
   @Post()
   create(@Body() data: any) {
     return this.userattendeesService.createMany(data);
@@ -118,21 +121,55 @@ export class UserattendController {
   GroupAll() {
     return this.userattendeesService.GroupAll();
   }
+  @Post('getstatusprofile')
+  async getstatusprofile(
+    @Body('roomid') roomid: string,
+    @Body('userid') userid: string,
+  ) {
+    return this.userattendeesService.getstatusprofile(roomid, userid);
+  }
   @Post('byuser')
   createMany(@Body() data: Prisma.userattendeesCreateManyInput) {
     return {
       result: this.userattendeesService.create(data),
     };
   }
-  @Put('foodupdate/:roomid/:userid/:status')
+  @Post('foodupdate')
   updateFood(
-    @Param('roomid') roomid: any,
-    @Param('userid') userid: any,
-    @Param('status') status: boolean,
+    @Body('roomid') roomid: any,
+    @Body('userid') userid: any,
+    @Body('statusfood') statusfood: boolean,
+    @Body('statusgift') statusgift: boolean,
   ) {
     return {
-      result: this.userattendeesService.updateFood(roomid, userid, status),
+      result: this.userattendeesService.updateFood(
+        roomid,
+        userid,
+        statusfood,
+        statusgift,
+      ),
     };
+  }
+  @Post('updatestatuscheckin')
+  updatestatuscheckin(
+    @Body('roomid') roomid: any,
+    @Body('userid') userid: any,
+    @Body('statuschckin') statuschckin: boolean,
+  ) {
+    return {
+      result: this.userattendeesService.updatestatuscheckin(
+        roomid,
+        userid,
+        statuschckin,
+      ),
+    };
+  }
+  @Post('loginbyphonenumber')
+  async loginbyphonenumber(
+    @Body('phonenumber') phonenumber: string,
+    @Body('idroom') idroom: string,
+  ) {
+    return this.userService.loginbyphonenumber(phonenumber, idroom);
   }
   @Delete('delete/position/:uuid')
   async deletePosition(@Param('uuid') uuid: any) {
@@ -184,8 +221,6 @@ export class UserattendController {
     @Param('roomid') roomid: string,
     @Param('userid') userid: string,
   ) {
-
-
     return this.userattendeesService.updateUserDetail(roomid, userid, data);
   }
   @Put('updateUserNoomeet/:roomid/:userid')
@@ -194,8 +229,6 @@ export class UserattendController {
     @Param('roomid') roomid: string,
     @Param('userid') userid: string,
   ) {
-
-
     return this.userattendeesService.updateUserNoMeet(roomid, userid, data);
   }
 

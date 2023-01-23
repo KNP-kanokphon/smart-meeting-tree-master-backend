@@ -159,43 +159,39 @@ model positionkpi {
 }
 
 model userattendees {
-  id           Int     @id @default(autoincrement())
-  username     String  @db.VarChar(255)
-  uuidprofile  String  @db.VarChar(255)
-  idmeeting    String  @db.VarChar(255)
-  type         String? @db.VarChar(255)
-  type_user    String  @db.VarChar(255)
-  position     Json?   @db.Json
-  phone        String? @db.VarChar(255)
-  email        String? @db.VarChar(255)
-  model        String? @db.VarChar(255)
-  confirm      Boolean @db.Boolean
-  checkin      Boolean @db.Boolean
-  foodstatus   Boolean @db.Boolean
-  signature    String? @db.VarChar()
-  username_eng String? @db.VarChar(250)
-  line         String? @db.VarChar(250)
-  uuidposition Json?   @db.Json
+  id           Int      @id @default(autoincrement())
+  username     String   @db.VarChar(255)
+  uuidprofile  String   @db.VarChar(255)
+  idmeeting    String   @db.VarChar(255)
+  type         String?  @db.VarChar(255)
+  type_user    String   @db.VarChar(255)
+  position     Json?    @db.Json
+  phone        String?  @db.VarChar(255)
+  email        String?  @db.VarChar(255)
+  model        String?  @db.VarChar(255)
+  confirm      Boolean  @db.Boolean
+  checkin      Boolean  @db.Boolean
+  foodstatus   Boolean  @db.Boolean
+  gifstatus    Boolean? @db.Boolean
+  votestatus   Boolean? @db.Boolean
+  signature    String?  @db.VarChar()
+  username_eng String?  @db.VarChar(250)
+  line         String?  @db.VarChar(250)
+  uuidposition Json?    @db.Json
 }
 
 model agendes {
-  id            Int     @id @default(autoincrement())
-  uuid          String? @db.VarChar(255)
-  agendes       String? @db.VarChar(255)
-  detailagendes String? @db.VarChar(255)
-  step          String? @db.VarChar(255)
-  partfiles     String? @db.VarChar(255)
+  id             Int     @id @default(autoincrement())
+  uuid           String? @db.VarChar(255)
+  agendes        String? @db.VarChar(255)
+  detailagendes  String? @db.VarChar(255)
+  step           String? @db.VarChar(255)
+  partfiles      String? @db.VarChar(255)
+  votingagree    String? @db.VarChar(255)
+  votingdisagree String? @db.VarChar(255)
+  votingabstain  String? @db.VarChar(255)
+  peopleall      String? @db.VarChar(255)
 }
-
-// model detailagendes {
-//   id         Int     @id @default(autoincrement())
-//   idmeeting  String  @db.VarChar(255)
-//   step       String? @db.VarChar(255)
-//   idagendess String? @db.VarChar(255)
-//   detail     String? @db.VarChar(255)
-//   type       String? @db.VarChar(255)
-//   filepart   String? @db.VarChar(255)
-// }
 
 model foodinmeeting {
   id       Int     @id @default(autoincrement())
@@ -234,4 +230,11 @@ model group {
   id        Int    @id @default(autoincrement())
   uuidgroup String @db.VarChar(255)
   namegroup String @db.VarChar(255)
+}
+
+model votehistory {
+  id          Int    @id @default(autoincrement())
+  roomid      String @db.VarChar(255)
+  userid      String @db.VarChar(255)
+  agendesstep String @db.VarChar(255)
 }

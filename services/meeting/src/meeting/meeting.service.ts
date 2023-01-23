@@ -7,6 +7,7 @@ import {
   FoodRepository,
   UserattendeesRepository,
   ContactRepository,
+  VotehistoryRepository,
 } from '@d-debt/share';
 import { Prisma } from '@prisma/client';
 import * as fs from 'fs';
@@ -23,6 +24,7 @@ export class MeetingService {
     private foodRepo: FoodRepository,
     private userattendRepo: UserattendeesRepository,
     private contactRepo: ContactRepository,
+    private votehistoryRepo: VotehistoryRepository,
   ) {}
 
   async findAll() {
@@ -275,12 +277,12 @@ export class MeetingService {
       });
     }
   }
+  async findagendesdetailbyid(roomid, step) {
+    return this.agendesRepo.findAgendaStep(roomid, step);
+  }
   async findFoodFetail(roomid: any) {
     return this.foodRepo.findByid(roomid);
   }
-  // async getDetailagendes(roomid: any, step: any) {
-  //   return this.detailAgendesRepo.findByid(roomid, step);
-  // }
   async savesummarymeeting(roomid: string, data: any) {
     return this.meetingRepo.updateSummary(roomid, data);
   }
@@ -500,5 +502,36 @@ export class MeetingService {
       });
     });
     await this.fileRepo.deleteagendes(idroom, String(newstep));
+  }
+  async vote(roomid, type, userid, step) {
+    const resultagree = await this.agendesRepo.findAgendaStep(roomid, step);
+    const resultUseratd = await this.votehistoryRepo.findbyid(roomid, userid);
+    // console.log(resultUseratd);
+
+    if (Object.keys(resultUseratd).length === 0) {
+      let sumvote;
+      if (type === 'agree') {
+        sumvote = Number(resultagree[0].votingagree) + 1;
+      } else if (type === 'disagree') {
+        sumvote = Number(resultagree[0].votingdisagree) + 1;
+      } else {
+        sumvote = Number(resultagree[0].votingdisagree) + 1;
+      }
+      const data = {
+        roomid: roomid,
+        userid: userid,
+        agendesstep: step,
+      };
+      await this.votehistoryRepo.create(data);
+      const updateagendesvote = await this.agendesRepo.updatevote(
+        roomid,
+        step,
+        String(sumvote),
+        type,
+      );
+      return '1';
+    } else {
+      return '0';
+    }
   }
 }

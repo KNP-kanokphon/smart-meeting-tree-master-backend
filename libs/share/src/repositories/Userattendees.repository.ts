@@ -79,7 +79,7 @@ export class UserattendeesRepository {
         idmeeting: idmeeting,
       },
       data: {
-        checkin: true,
+        checkin: false,
         confirm: true,
       },
     });
@@ -88,17 +88,37 @@ export class UserattendeesRepository {
   async updatefoodUser(
     idmeeting: any,
     iduser: any,
-    statusFood: boolean,
+    statusfood: boolean,
+    statusgift: boolean,
     option?: { prisma?: TQueryClient },
   ) {
     const prisma = option?.prisma ?? this.prisma;
+
     return prisma.userattendees.updateMany({
       where: {
         uuidprofile: iduser,
         idmeeting: idmeeting,
       },
       data: {
-        foodstatus: statusFood,
+        foodstatus: statusfood,
+        gifstatus: statusgift,
+      },
+    });
+  }
+  async updatestatuscheckin(
+    roomid: string,
+    userid: string,
+    statuschckin: boolean,
+    option?: { prisma?: TQueryClient },
+  ) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.userattendees.updateMany({
+      where: {
+        uuidprofile: userid,
+        idmeeting: roomid,
+      },
+      data: {
+        checkin: statuschckin,
       },
     });
   }
@@ -154,6 +174,22 @@ export class UserattendeesRepository {
     return prisma.userattendees.deleteMany({
       where: {
         idmeeting: idroomid,
+      },
+    });
+  }
+  async updatevote(
+    idroomid: string,
+    userid: string,
+    option?: { prisma?: TQueryClient },
+  ) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.userattendees.updateMany({
+      where: {
+        idmeeting: idroomid,
+        uuidprofile: userid,
+      },
+      data: {
+        votestatus: true,
       },
     });
   }

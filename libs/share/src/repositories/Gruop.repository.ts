@@ -11,15 +11,6 @@ export class GroupRepository {
     const prisma = option?.prisma ?? this.prisma;
     return prisma.group.findMany();
   }
-  //   async findByid(uuid: string, option?: { prisma?: TQueryClient }) {
-  //     const prisma = option?.prisma ?? this.prisma;
-  //     return prisma.group.findMany({
-  //       where: {
-  //         uuid: uuid,
-  //       },
-  //     });
-  //   }
-
   async update(uuid: string, data: any, option?: { prisma?: TQueryClient }) {
     console.log(data);
 

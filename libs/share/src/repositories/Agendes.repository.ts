@@ -34,6 +34,19 @@ export class AgendesRepository {
       },
     });
   }
+  async findAgendaStep(
+    roomid: string,
+    step: string,
+    option?: { prisma?: TQueryClient },
+  ) {
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.agendes.findMany({
+      where: {
+        uuid: roomid,
+        step: step,
+      },
+    });
+  }
   async delete(roomid: string, option?: { prisma?: TQueryClient }) {
     const prisma = option?.prisma ?? this.prisma;
     return prisma.agendes.deleteMany({
@@ -49,6 +62,36 @@ export class AgendesRepository {
     const prisma = option?.prisma ?? this.prisma;
     return prisma.agendes.createMany({
       data,
+    });
+  }
+  async updatevote(
+    roomid: string,
+    step: string,
+    sumvote: string,
+    type: string,
+    option?: { prisma?: TQueryClient },
+  ) {
+    let sumvtype;
+    if (type === 'agree') {
+      sumvtype = {
+        votingagree: sumvote,
+      };
+    } else if (type === 'disagree') {
+      sumvtype = {
+        votingdisagree: sumvote,
+      };
+    } else {
+      sumvtype = {
+        votingabstain: sumvote,
+      };
+    }
+    const prisma = option?.prisma ?? this.prisma;
+    return prisma.agendes.updateMany({
+      where: {
+        uuid: roomid,
+        step: step,
+      },
+      data: sumvtype,
     });
   }
 }
