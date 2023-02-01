@@ -8,12 +8,12 @@ import {
   UserattendeesRepository,
   ContactRepository,
   VotehistoryRepository,
+  ActivityplanRepository,
+  ActivityRepository,
 } from '@d-debt/share';
 import { Prisma } from '@prisma/client';
 import * as fs from 'fs';
-import rimraf from 'rimraf';
-import { el } from 'date-fns/locale';
-import { async } from 'rxjs';
+const SMS = require('../sms/authsms.service');
 
 @Injectable()
 export class MeetingService {
@@ -25,6 +25,8 @@ export class MeetingService {
     private userattendRepo: UserattendeesRepository,
     private contactRepo: ContactRepository,
     private votehistoryRepo: VotehistoryRepository,
+    private activityplanRepo: ActivityplanRepository,
+    private activityRepo: ActivityRepository,
   ) {}
 
   async findAll() {
@@ -54,6 +56,7 @@ export class MeetingService {
       summarychecklist: false,
       gift: data.dataFood.gift === undefined ? false : true,
     };
+
     const result = await this.meetingRepo.create(meetingData);
     if (result) {
       data.newDataUser.map(async (x: any) => {
@@ -73,35 +76,42 @@ export class MeetingService {
               ? []
               : resultPosition[0].uuidposition,
         };
-        await this.userattendRepo.createMany(dataNew);
-      });
-      data.dataDetail.agenda.map(async (x: any, i: number) => {
-        const step = i + 1;
-        const path = `./files_all/file_agenda/${data.id}/${step}/`;
-        const dataAgende = {
-          uuid: data.id,
-          agendes: x.title,
-          detailagendes: x.detail,
-          step: String(step),
-          partfiles: path,
-        };
-        await this.agendesRepo.create(dataAgende);
-      });
+        const resultcreateuer = await this.userattendRepo.createMany(dataNew);
 
-      // data.dataDetail.agenda.map(async (x: any, i: number) => {
-      //   const step = i + 1;
-      //   const path = `./files_all/file_agenda/${data.id}/${step}/`;
-      //   const dataDetail = {
-      //     idmeeting: data.id,
-      //     step: String(step),
-      //     idagendess: String(step),
-      //     detail: x.detail,
-      //     type: null,
-      //     filepart: path,
-      //   };
-      //   // console.log(dataDetail);
-      //   await this.detailAgendesRepo.create(dataDetail);
-      // });
+        function replacePhoneNumber(phoneNumber) {
+          return phoneNumber.replace(/[^0-9]/g, '');
+        }
+        if (resultcreateuer) {
+          const authsms = new SMS();
+          authsms.getAuth().then(async (jwt: { jwt: string }) => {
+            // const auth = jwt.jwt;
+            // authsms.sendsms(
+            //   replacePhoneNumber(resultPosition[0].phonenumber),
+            //   auth,
+            //   data.newDataAgenda.title,
+            //   data.id,
+            //   resultPosition[0].uuid,
+            // );
+          });
+        }
+      });
+      console.log(data.statusagendes);
+
+      if (data.statusagendes === true) {
+        data.dataDetail.agenda.map(async (x: any, i: number) => {
+          const step = i + 1;
+          const path = `./files_all/file_agenda/${data.id}/${step}/`;
+          const dataAgende = {
+            uuid: data.id,
+            agendes: x.title,
+            detailagendes: x.detail,
+            step: String(step),
+            partfiles: path,
+          };
+          await this.agendesRepo.create(dataAgende);
+        });
+      }
+
       if (data.dataFood.fooddetail !== undefined) {
         data.dataFood.fooddetail.map(async (x: any) => {
           const foodData = {
@@ -112,6 +122,75 @@ export class MeetingService {
           await this.foodRepo.create(foodData);
         });
       }
+    }
+  }
+
+  async createactivityplan(detail: any) {
+    return await this.activityplanRepo.create(detail);
+  }
+
+  async getactivityallplan() {
+    return await this.activityplanRepo.findAll();
+  }
+  async getactivityall(idactivity) {
+    return await this.activityRepo.findbyid(idactivity);
+  }
+
+  async createactivity(detail) {
+    const resultdelete = await this.activityplanRepo.findByid(detail.idativity);
+    // console.log(resultdelete);
+
+    function replacePhoneNumber(phoneNumber) {
+      return phoneNumber.replace(/[^0-9]/g, '');
+    }
+    if (detail.data.detail.length !== 0) {
+      return detail.data.detail.map(
+        async (data: {
+          idactivity: string;
+          applicationnumber: string;
+          phonenumberownergang: string;
+          namegang: string;
+          schedulematch: string;
+          paymentstatus: boolean;
+          ownergang: string;
+          member1: string;
+          phonenumbermember1: string;
+          member2: string;
+          phonenumbermember2: string;
+          member3: string;
+          phonenumbermember3: string;
+          member4: string;
+          phonenumbermember4: string;
+          checkinstatus: boolean;
+          sendsmsstatus: boolean;
+        }) => {
+          if (data.sendsmsstatus === false) {
+            console.log(false);
+
+            const resultcreateuer = await this.activityRepo.create(data);
+            if (resultcreateuer) {
+              const authsms = new SMS();
+              const resultsms = authsms
+                .getAuth()
+                .then(async (jwt: { jwt: string }) => {
+                  const auth = jwt.jwt;
+                  authsms.sendsms(
+                    replacePhoneNumber(data.phonenumberownergang),
+                    auth,
+                    resultdelete[0].activitytopic,
+                    data.applicationnumber,
+                    detail.idativity,
+                  );
+                });
+              if (resultsms) {
+                return await this.activityRepo.updatestatussms(data);
+              }
+            }
+          } else {
+            return await this.activityRepo.update(data);
+          }
+        },
+      );
     }
   }
 
@@ -505,7 +584,11 @@ export class MeetingService {
   }
   async vote(roomid, type, userid, step) {
     const resultagree = await this.agendesRepo.findAgendaStep(roomid, step);
-    const resultUseratd = await this.votehistoryRepo.findbyid(roomid, userid);
+    const resultUseratd = await this.votehistoryRepo.findbyid(
+      roomid,
+      userid,
+      step,
+    );
     // console.log(resultUseratd);
 
     if (Object.keys(resultUseratd).length === 0) {
@@ -515,8 +598,9 @@ export class MeetingService {
       } else if (type === 'disagree') {
         sumvote = Number(resultagree[0].votingdisagree) + 1;
       } else {
-        sumvote = Number(resultagree[0].votingdisagree) + 1;
+        sumvote = Number(resultagree[0].votingabstain) + 1;
       }
+
       const data = {
         roomid: roomid,
         userid: userid,
@@ -533,5 +617,28 @@ export class MeetingService {
     } else {
       return '0';
     }
+  }
+
+  async submitsummarypage(roomid, detailsummary) {
+    const result = await this.meetingRepo.updateSummary(roomid, detailsummary);
+    return result;
+  }
+  async submitfilesummarypage(roomid, file, numberfile, namefile) {
+    const path = `./files_all/file_summarymeeting/${roomid}/`;
+    const resultEpm = fs.mkdirSync(path, { recursive: true });
+    const type = 'fileSummary';
+    fs.createWriteStream(`${path}${roomid + numberfile}.pdf`).write(
+      file[0].buffer,
+    );
+    file.map((e, i) => {
+      return this.fileRepo.create(
+        roomid,
+        namefile,
+        path,
+        type,
+        null,
+        `${roomid + numberfile}.pdf`,
+      );
+    });
   }
 }

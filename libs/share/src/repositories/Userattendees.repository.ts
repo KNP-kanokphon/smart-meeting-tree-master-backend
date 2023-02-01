@@ -6,11 +6,6 @@ import { userattendees, Prisma } from '@prisma/client';
 @Injectable()
 export class UserattendeesRepository {
   constructor(private prisma: PrismaService) {}
-
-  // async findAll(option?: { prisma?: TQueryClient }) {
-  //   const prisma = option?.prisma ?? this.prisma;
-  //   return prisma.userattendees.findMany();
-  // }
   async createMany(
     data: Prisma.userattendeesCreateManyInput,
     option?: { prisma?: TQueryClient },

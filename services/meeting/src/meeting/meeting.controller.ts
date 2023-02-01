@@ -69,9 +69,25 @@ export class MeetingController {
   ) {
     return this.meetingService.findagendesdetailbyid(roomid, step);
   }
+  @Get('activityplan/getactivityplanall')
+  getactivityallplan() {
+    return this.meetingService.getactivityallplan();
+  }
+  @Get('activity/getactivityall')
+  getactivityall(@Param('idactivity') idactivity: string) {
+    return this.meetingService.getactivityall(idactivity);
+  }
   @Post()
   create(@Body() data: any) {
     return this.meetingService.create(data);
+  }
+  @Post('activityplan')
+  createactivityplan(@Body() data: any) {
+    return this.meetingService.createactivityplan(data);
+  }
+  @Post('activity')
+  createactivity(@Body() data: any) {
+    return this.meetingService.createactivity(data);
   }
 
   @Post('getfilestep')
@@ -113,6 +129,14 @@ export class MeetingController {
       dataFood,
     );
   }
+  @Post('submitsummarypage')
+  submitsummarypage(
+    @Body('roomid') roomid: any,
+    @Body('detailsummary') detailsummary: any,
+  ) {
+    return this.meetingService.submitsummarypage(roomid, detailsummary);
+  }
+
   @Post('/updatefileoverviwe/:roomid')
   @UseInterceptors(AnyFilesInterceptor())
   async updatefileoverviwe(
@@ -121,6 +145,7 @@ export class MeetingController {
   ): Promise<any> {
     return this.meetingService.updatefileoverviwe(idmeeting, files);
   }
+
   @Post('/uploadfileoverview/:id/:namefile/:idfile')
   @UseInterceptors(AnyFilesInterceptor())
   async uploadfileoverview(
@@ -200,24 +225,22 @@ export class MeetingController {
   ) {
     return this.meetingService.savesummarymeeting(idmeeting, data);
   }
-  @Post('/savesummarymeetingFile/:roomid')
+  @Post('/submitfilesummarypage/:roomid/:numberfile/:namefile')
   @UseInterceptors(AnyFilesInterceptor())
-  async savesummarymeetingFile(
+  async submitfilesummarypage(
     @UploadedFiles() files: Array<Express.Multer.File>,
     @Param('roomid') idmeeting: string,
+    @Param('numberfile') numberfile: string,
+    @Param('namefile') namefile: string,
   ): Promise<any> {
-    return this.meetingService.savesummarymeetingFile(idmeeting, files);
+    return this.meetingService.submitfilesummarypage(
+      idmeeting,
+      files,
+      numberfile,
+      namefile,
+    );
   }
 
-  @Post('agenda')
-  @UseInterceptors(AnyFilesInterceptor())
-  createAgendes(
-    @Body('agendas') agendas: any,
-    @Body('id') id: string,
-    @Body('step') step: string,
-  ) {
-    return this.meetingService.createAgendes(agendas, id, step);
-  }
   @Post('vote')
   vote(
     @Body('roomid') roomid: string,

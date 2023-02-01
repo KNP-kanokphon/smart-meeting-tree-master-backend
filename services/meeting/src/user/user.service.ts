@@ -8,22 +8,76 @@ import {
   UserpartyRepository,
   UserpartyhistoryRepository,
   GroupRepository,
+  UserinfoRepository,
+  MeetingRepository,
+  CourseRepository,
 } from '@d-debt/share';
+import { JwtService } from '@nestjs/jwt';
 import { Prisma } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
-import { el } from 'date-fns/locale';
-import { async } from 'rxjs';
-// import { CreateUserDto } from './dto/create-user.dto';
-// import { UpdateUserDto } from './dto/update-user.dto';
+import * as dayjs from 'dayjs';
+import * as utc from 'dayjs/plugin/utc';
+import * as timezone from 'dayjs/plugin/timezone';
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
 @Injectable()
 export class UserService {
   constructor(
+    private meetingRepo: MeetingRepository,
     private contactRepo: ContactRepository,
     private listnameRepo: ListnameRepository,
     private positionRepo: PositionRepository,
     private userattendeesRepo: UserattendeesRepository,
+    private UserRepo: UserinfoRepository,
   ) {}
+
+  async shrinkdata(subToken: string) {
+    const resultfinduser = await this.UserRepo.findOne(subToken);
+    if (resultfinduser === null) {
+      return null;
+    }
+    return resultfinduser;
+    // console.log(subToken);
+    // console.log(roles.roles.length);
+
+    // const data = {
+    //   roleName: roles.data,
+    //   description: roles.data,
+    // };
+    // console.log(data);
+
+    // await this.UserRepo.createrole(data);
+    // console.log(await this.UserRepo.createrole(data));
+  }
+  async updateprofile(name, email, subToken) {
+    const data = {
+      employeeId: subToken,
+      fullname: name,
+      email: email,
+      title: '',
+      is_active: true,
+    };
+
+    return await this.UserRepo.create(data);
+  }
+
+  async createrole(roleName, description) {
+    const data = {
+      roleName: roleName,
+      description: description,
+    };
+    // await this.UserRepo.createrole(data);
+  }
+
+  async checkprofile(subToken, name, email) {
+    const profile = await this.UserRepo.findOne(subToken);
+
+    if (profile) {
+    } else {
+      return 202;
+    }
+  }
 
   findAll() {
     return this.contactRepo.findAll();
@@ -51,6 +105,22 @@ export class UserService {
     return this.contactRepo.updateUser(userid, data);
   }
   async loginbyphonenumber(phonenumber: string, idroom: string) {
+    const meeting = await this.meetingRepo.findByid(idroom);
+
+    const dateStr = dayjs(`${meeting[0].day} ${meeting[0].starttime}`)
+      .tz('Asia/Bangkok')
+      .format('YYYY-MM-DD');
+    const dateEnd = dayjs(`${new Date()}`)
+      .tz('Asia/Bangkok')
+      .format('YYYY-MM-DD');
+
+    if (Object.keys(meeting).length === 0) {
+      return 'notroom';
+    }
+    if (dateStr !== dateEnd) {
+      return 'expride';
+    }
+
     function replacePhoneNumber(phoneNumber) {
       return phoneNumber.replace(/[^0-9]/g, '');
     }
@@ -68,16 +138,6 @@ export class UserService {
     }
 
     const result = await this.contactRepo.loginbyphonenumber();
-    // function mapposition(idposition) {
-    //   if (idposition.length > 0) {
-    //   } else {
-    //     idposition.map(async (x: any) => {
-    //       console.log(await this.positionRepo.findbyid(x));
-    //     });
-    //   }
-    // }
-    // console.log(result);
-
     const dataAll = [];
     result.map((x: any) => {
       if (x.phonenumber.includes('\n') || x.phonenumber.includes(',')) {
@@ -102,27 +162,30 @@ export class UserService {
         });
       }
     });
+
     const resultfilter = dataAll.filter(
       (x: any) =>
         String(x.phonenumber) === String(replacePhoneNumber(phonenumber)),
     );
-    const dataFilter = [];
-    const resultUseratd = await this.userattendeesRepo.findUserInroom(idroom);
-    resultUseratd.map((x: any) => {
-      if (String(resultfilter[0].uuid) === String(x.uuidprofile)) {
-        dataFilter.push({
-          uuid: resultfilter[0].uuid,
-          username: resultfilter[0].username,
-          phonenumber: resultfilter[0].phonenumber,
-          prefix: resultfilter[0].prefix,
-          course: resultfilter[0].course,
-          uuidposition: resultfilter[0].uuidposition,
-        });
-      }
-    });
-    console.log(dataFilter);
 
-    return dataFilter;
+    if (Object.keys(resultfilter).length > 0) {
+      const dataFilter = [];
+      const resultUseratd = await this.userattendeesRepo.findUserInroom(idroom);
+      resultUseratd.map((x: any) => {
+        if (String(resultfilter[0].uuid) === String(x.uuidprofile)) {
+          dataFilter.push({
+            uuid: resultfilter[0].uuid,
+            username: resultfilter[0].username,
+            phonenumber: resultfilter[0].phonenumber,
+            prefix: resultfilter[0].prefix,
+            course: resultfilter[0].course,
+            uuidposition: resultfilter[0].uuidposition,
+          });
+        }
+      });
+      return dataFilter;
+    }
+    return resultfilter;
   }
 }
 
@@ -134,6 +197,7 @@ export class UserattendeesService {
     private listnameRepo: ListnameRepository,
     private positionRepo: PositionRepository,
     private groupRepo: GroupRepository,
+    private courseRepo: CourseRepository,
   ) {}
 
   findAll() {
@@ -184,6 +248,15 @@ export class UserattendeesService {
       console.log('userAttendee', e);
     });
   }
+  async Createcourse(data) {
+    return await this.courseRepo.create(data);
+  }
+  async Updatecourse(data) {
+    return await this.courseRepo.update(data);
+  }
+  async deletecourse(uuid) {
+    return await this.courseRepo.delete(uuid);
+  }
 
   async findbyid(roomid: string, userid: string) {
     return await this.userattendeesRepo.findbyid(roomid, userid);
@@ -219,9 +292,6 @@ export class UserattendeesService {
   async getPositionAll() {
     return await this.positionRepo.findAll();
   }
-  async getCourseAll() {
-    return await this.positionRepo.findallCourse();
-  }
   async updateFood(
     roomid: any,
     userid: any,
@@ -248,6 +318,10 @@ export class UserattendeesService {
   async GroupAll() {
     return await this.groupRepo.findAll();
   }
+  async CourseAll() {
+    return await this.courseRepo.findAll();
+  }
+
   async CreateGroup(data: any) {
     return await this.groupRepo.create(data);
   }
@@ -267,6 +341,129 @@ export class UserattendeesService {
       userid,
       statuschckin,
     );
+  }
+  async submituserexternal(
+    roomid,
+    newuuid,
+    username,
+    phonenumber,
+    email,
+    model,
+    course,
+    position,
+  ) {
+    function replacePhoneNumber(phoneNumber) {
+      return phoneNumber.replace(/[^0-9]/g, '');
+    }
+    function checkForCharacters(inputString) {
+      let newdata;
+      if (inputString.includes('\n')) {
+        newdata = inputString.split('\n');
+      }
+
+      if (inputString.includes(',')) {
+        newdata = inputString.split(',');
+      }
+      return newdata;
+    }
+
+    const result = await this.contactRepo.loginbyphonenumber();
+
+    const dataAll = [];
+    result.map((x: any) => {
+      if (x.phonenumber.includes('\n') || x.phonenumber.includes(',')) {
+        checkForCharacters(x.phonenumber).map((e: any) => {
+          dataAll.push({
+            uuid: x.uuid,
+            username: x.username,
+            phonenumber: replacePhoneNumber(e),
+            prefix: x.prefix,
+            course: x.course,
+            uuidposition: x.uuidposition,
+          });
+        });
+      } else {
+        dataAll.push({
+          uuid: x.uuid,
+          username: x.username,
+          phonenumber: replacePhoneNumber(x.phonenumber),
+          prefix: x.prefix,
+          course: x.course,
+          uuidposition: x.uuidposition,
+        });
+      }
+    });
+    const resultfilter = dataAll.filter(
+      (x: any) =>
+        String(x.phonenumber) === String(replacePhoneNumber(phonenumber)),
+    );
+    if (resultfilter.length === 0) {
+      const createNewuseratd = {
+        username: username,
+        uuidprofile: newuuid,
+        idmeeting: roomid,
+        type: '',
+        type_user: 'front_of_work',
+        position: position,
+        phone: replacePhoneNumber(phonenumber),
+        email: email,
+        model: model,
+        confirm: true,
+        checkin: false,
+        foodstatus: false,
+        gifstatus: false,
+        votestatus: false,
+        uuidposition: position,
+      };
+      const createNewusercontact = {
+        uuid: newuuid,
+        username: username,
+        prefix: username,
+        idcard: '',
+        bridday: '',
+        phonenumber: replacePhoneNumber(phonenumber),
+        email: email,
+        course: course,
+        course1: '',
+        model: model,
+        position: position,
+      };
+      const createatd = await this.userattendeesRepo.create(createNewuseratd);
+      const createcontact = await this.contactRepo.create(createNewusercontact);
+      console.log('if', createatd);
+
+      return createatd;
+    } else {
+      const result = await this.userattendeesRepo.findbyid(
+        roomid,
+        resultfilter[0].uuid,
+      );
+      if (result.length === 0) {
+        const useratd = {
+          username: resultfilter[0].username,
+          uuidprofile: resultfilter[0].uuid,
+          idmeeting: roomid,
+          type: resultfilter[0].type,
+          type_user: 'front_of_work',
+          position: resultfilter[0].position,
+          phone: resultfilter[0].phonenumber,
+          email: resultfilter[0].email,
+          model: resultfilter[0].model,
+          confirm: true,
+          checkin: false,
+          foodstatus: false,
+          gifstatus: false,
+          votestatus: false,
+          username_eng: resultfilter[0].username_eng,
+          uuidposition: resultfilter[0].uuidposition,
+        };
+        const createatd = await this.userattendeesRepo.create(useratd);
+        console.log('else', createatd);
+        return createatd;
+      } else {
+        return result;
+      }
+    }
   }
 }
 

@@ -10,91 +10,97 @@ datasource db {
 }
 
 model meetings {
-  id               Int     @id @default(autoincrement())
-  detail           String? @db.Text
-  title            String  @db.VarChar(255)
-  room             String  @db.VarChar(255)
-  floor            String? @db.VarChar(255)
-  building         String? @db.VarChar(255)
-  meetingplace     String? @db.VarChar(255)
-  day              String  @db.VarChar(255)
-  starttime        String  @db.VarChar(255)
-  endtime          String  @db.VarChar(255)
-  uuid             String  @db.VarChar(255)
-  summarymeeting   String? @db.Text
-  summarychecklist Boolean @db.Boolean
-  gift             Boolean @db.Boolean
+  id               Int      @id @default(autoincrement())
+  detail           String?  @db.Text
+  title            String   @db.VarChar(255)
+  room             String   @db.VarChar(255)
+  floor            String?  @db.VarChar(255)
+  building         String?  @db.VarChar(255)
+  meetingplace     String?  @db.VarChar(255)
+  day              String   @db.VarChar(255)
+  starttime        String   @db.VarChar(255)
+  endtime          String   @db.VarChar(255)
+  uuid             String   @db.VarChar(255)
+  summarymeeting   String?  @db.Text
+  summarychecklist Boolean  @db.Boolean
+  gift             Boolean  @db.Boolean
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @default(now())
 }
 
 model contacts {
-  id                Int     @id @default(autoincrement())
-  uuid              String  @db.VarChar(100)
-  username          String  @db.VarChar(100)
-  prefix            String  @db.VarChar(100)
-  idcard            String? @db.VarChar(100)
-  bridday           String? @db.VarChar(100)
-  phonenumber       Json?   @db.Json
-  email             String? @db.VarChar(100)
-  course            Json?   @db.Json
-  course1           Json?   @db.Json
-  model             String? @db.VarChar(100)
-  position          Json?   @db.Json
-  studentid         String? @db.VarChar(100)
-  username_eng      String? @db.VarChar(100)
-  line              String? @db.VarChar(100)
-  type              String? @db.VarChar(100)
-  active            String? @db.VarChar(100)
-  number            String? @db.VarChar(100)
-  roomnumber        String? @db.VarChar(100)
-  bldg              String? @db.VarChar(100)
-  villageno         String? @db.VarChar(100)
-  alley             String? @db.VarChar(100)
-  road              String? @db.VarChar(100)
-  subdistrict       String? @db.VarChar(100)
-  district          String? @db.VarChar(100)
-  province          String? @db.VarChar(100)
-  postalcode        String? @db.VarChar(100)
-  passport          String? @db.VarChar(100)
-  certificate       String? @db.VarChar(100)
-  workpermit        String? @db.VarChar(100)
-  work              String? @db.VarChar(100)
-  job_position      String? @db.VarChar(100)
-  salary            String? @db.VarChar(100)
-  work_station      String? @db.VarChar(100)
-  work_number       String? @db.VarChar(100)
-  work_villageno    String? @db.VarChar(100)
-  work_alley        String? @db.VarChar(100)
-  work_road         String? @db.VarChar(100)
-  work_sub_district String? @db.VarChar(100)
-  work_district     String? @db.VarChar(100)
-  work_province     String? @db.VarChar(100)
-  work_postal_code  String? @db.VarChar(100)
-  phone_office      String? @db.VarChar(100)
-  all_assets        String? @db.VarChar(100)
-  previous_job      String? @db.VarChar(100)
-  criminalcase      String? @db.VarChar(100)
-  position_guild    Json?   @db.Json
-  guild             String? @db.VarChar(100)
-  others            String? @db.VarChar(100)
-  age               String? @db.VarChar(100)
-  prefixtitleeng    String? @db.VarChar(100)
-  idgroup           String? @db.VarChar(100)
-  remark            String? @db.VarChar(200)
-  uuidposition      Json?   @db.Json
+  id                Int      @id @default(autoincrement())
+  uuid              String   @db.VarChar(100)
+  username          String   @db.VarChar(100)
+  prefix            String   @db.VarChar(100)
+  idcard            String?  @db.VarChar(100)
+  bridday           String?  @db.VarChar(100)
+  phonenumber       Json?    @db.Json
+  email             String?  @db.VarChar(100)
+  course            Json?    @db.Json
+  course1           Json?    @db.Json
+  model             String?  @db.VarChar(100)
+  position          Json?    @db.Json
+  studentid         String?  @db.VarChar(100)
+  username_eng      String?  @db.VarChar(100)
+  line              String?  @db.VarChar(100)
+  type              String?  @db.VarChar(100)
+  active            String?  @db.VarChar(100)
+  number            String?  @db.VarChar(100)
+  roomnumber        String?  @db.VarChar(100)
+  bldg              String?  @db.VarChar(100)
+  villageno         String?  @db.VarChar(100)
+  alley             String?  @db.VarChar(100)
+  road              String?  @db.VarChar(100)
+  subdistrict       String?  @db.VarChar(100)
+  district          String?  @db.VarChar(100)
+  province          String?  @db.VarChar(100)
+  postalcode        String?  @db.VarChar(100)
+  passport          String?  @db.VarChar(100)
+  certificate       String?  @db.VarChar(100)
+  workpermit        String?  @db.VarChar(100)
+  work              String?  @db.VarChar(100)
+  job_position      String?  @db.VarChar(100)
+  salary            String?  @db.VarChar(100)
+  work_station      String?  @db.VarChar(100)
+  work_number       String?  @db.VarChar(100)
+  work_villageno    String?  @db.VarChar(100)
+  work_alley        String?  @db.VarChar(100)
+  work_road         String?  @db.VarChar(100)
+  work_sub_district String?  @db.VarChar(100)
+  work_district     String?  @db.VarChar(100)
+  work_province     String?  @db.VarChar(100)
+  work_postal_code  String?  @db.VarChar(100)
+  phone_office      String?  @db.VarChar(100)
+  all_assets        String?  @db.VarChar(100)
+  previous_job      String?  @db.VarChar(100)
+  criminalcase      String?  @db.VarChar(100)
+  position_guild    Json?    @db.Json
+  guild             String?  @db.VarChar(100)
+  others            String?  @db.VarChar(100)
+  age               String?  @db.VarChar(100)
+  prefixtitleeng    String?  @db.VarChar(100)
+  idgroup           String?  @db.VarChar(100)
+  remark            String?  @db.VarChar(200)
+  uuidposition      Json?    @db.Json
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @default(now())
 }
 
 model address {
-  id              Int     @id @default(autoincrement())
-  uuid            String  @db.VarChar(100)
-  housenumber     String? @db.VarChar(100)
-  villagebuilding String? @db.VarChar(100)
-  group           String? @db.VarChar(100)
-  alley           String? @db.VarChar(100)
-  road            String? @db.VarChar(100)
-  subdistrict     String? @db.VarChar(100)
-  district        String? @db.VarChar(100)
-  province        String? @db.VarChar(100)
-  zipcode         String? @db.VarChar(100)
+  id              Int      @id @default(autoincrement())
+  uuid            String   @db.VarChar(100)
+  housenumber     String?  @db.VarChar(100)
+  villagebuilding String?  @db.VarChar(100)
+  group           String?  @db.VarChar(100)
+  alley           String?  @db.VarChar(100)
+  road            String?  @db.VarChar(100)
+  subdistrict     String?  @db.VarChar(100)
+  district        String?  @db.VarChar(100)
+  province        String?  @db.VarChar(100)
+  zipcode         String?  @db.VarChar(100)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now())
 }
 
 model otherinformation {
@@ -124,38 +130,43 @@ model otherinformation {
 }
 
 model listname {
-  id          Int     @id @default(autoincrement())
-  uuid        String  @db.VarChar(250)
-  username    String  @db.VarChar(250)
-  phone       String? @db.VarChar(250)
-  group       String  @db.VarChar(20)
-  course      Json?   @db.Json
-  position    String? @db.VarChar(250)
-  positionkpi String? @db.VarChar(250)
-  address     String? @db.VarChar(250)
-  email       String? @db.VarChar(250)
+  id          Int      @id @default(autoincrement())
+  uuid        String   @db.VarChar(250)
+  username    String   @db.VarChar(250)
+  phone       String?  @db.VarChar(250)
+  group       String   @db.VarChar(20)
+  course      Json?    @db.Json
+  position    String?  @db.VarChar(250)
+  positionkpi String?  @db.VarChar(250)
+  address     String?  @db.VarChar(250)
+  email       String?  @db.VarChar(250)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
 }
 
 model course {
   id         Int      @id @default(autoincrement())
   uuid       String   @db.VarChar(100)
   namecourse String   @db.VarChar(100)
-  createdate DateTime @db.Timestamptz(3)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
 }
 
 model position {
   id           Int      @id @default(autoincrement())
   uuid         String   @db.VarChar(100)
   nameposition String   @db.VarChar(100)
-  createdate   DateTime @db.Timestamptz(3)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
 }
 
 model positionkpi {
-  id         Int     @id @default(autoincrement())
-  uuid       String  @db.VarChar(100)
-  username   String  @db.VarChar(100)
-  createdate String? @db.VarChar(20)
-  updatedate String? @db.VarChar(250)
+  id         Int      @id @default(autoincrement())
+  uuid       String   @db.VarChar(100)
+  username   String   @db.VarChar(100)
+  createdate String?  @db.VarChar(20)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
 }
 
 model userattendees {
@@ -178,6 +189,8 @@ model userattendees {
   username_eng String?  @db.VarChar(250)
   line         String?  @db.VarChar(250)
   uuidposition Json?    @db.Json
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
 }
 
 model agendes {
@@ -227,14 +240,71 @@ model userpartyhistory {
 }
 
 model group {
-  id        Int    @id @default(autoincrement())
-  uuidgroup String @db.VarChar(255)
-  namegroup String @db.VarChar(255)
+  id        Int      @id @default(autoincrement())
+  uuidgroup String   @db.VarChar(255)
+  namegroup String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 }
 
 model votehistory {
-  id          Int    @id @default(autoincrement())
-  roomid      String @db.VarChar(255)
-  userid      String @db.VarChar(255)
-  agendesstep String @db.VarChar(255)
+  id          Int      @id @default(autoincrement())
+  roomid      String   @db.VarChar(255)
+  userid      String   @db.VarChar(255)
+  agendesstep String   @db.VarChar(255)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+}
+
+model userinfo {
+  id         Int      @id @default(autoincrement())
+  employeeId String   @unique @db.VarChar(255)
+  fullname   String   @db.VarChar(255)
+  title      String   @db.VarChar(255)
+  email      String   @db.VarChar(255)
+  is_active  Boolean  @db.Boolean
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+}
+
+model activityplan {
+  id               Int      @id @default(autoincrement())
+  idactivity       String   @unique @db.VarChar(255)
+  activitytopic    String   @db.VarChar(255)
+  activitydetails  String?  @db.Text
+  scheduleactivity String?  @db.Text
+  locationactivity String?  @db.Text
+  typeactivity     String   @db.Text
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @default(now())
+}
+
+model activity {
+  id                   Int     @id @default(autoincrement())
+  idactivity           String  @db.VarChar(255)
+  applicationnumber    String  @unique @db.VarChar(255)
+  phonenumberownergang String  @db.VarChar(255)
+  namegang             String  @db.VarChar(255)
+  schedulematch        String  @db.VarChar(255)
+  paymentstatus        Boolean @db.Boolean
+  ownergang            String  @db.VarChar(255)
+  member1              String? @db.VarChar(255)
+  phonenumbermember1   String? @db.VarChar(255)
+  member2              String? @db.VarChar(255)
+  phonenumbermember2   String? @db.VarChar(255)
+  member3              String? @db.VarChar(255)
+  phonenumbermember3   String? @db.VarChar(255)
+  member4              String? @db.VarChar(255)
+  phonenumbermember4   String? @db.VarChar(255)
+  checkinstatus        Boolean @db.Boolean
+  sendsmsstatus        Boolean @db.Boolean
+}
+
+model activityuserlog {
+  id           Int      @id @default(autoincrement())
+  username     String   @db.VarChar(255)
+  phonenumber  String?  @db.VarChar(255)
+  typeactivity String   @db.VarChar(255)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
 }

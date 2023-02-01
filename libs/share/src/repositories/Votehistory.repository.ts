@@ -19,6 +19,7 @@ export class VotehistoryRepository {
   async findbyid(
     roomid: string,
     userid: string,
+    step: string,
     option?: { prisma?: TQueryClient },
   ) {
     const prisma = option?.prisma ?? this.prisma;
@@ -26,6 +27,7 @@ export class VotehistoryRepository {
       where: {
         roomid: roomid,
         userid: userid,
+        agendesstep: step,
       },
     });
   }

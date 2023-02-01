@@ -3,28 +3,21 @@ import {
   Get,
   Post,
   Body,
-  Patch,
+  Req,
   Param,
   Delete,
-  UseFilters,
   Put,
-  UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
+import { UserInterceptor } from '@d-debt/share';
 import {
   UserService,
   UserPartyService,
   UserattendeesService,
 } from './user.service';
-import * as papa from 'papaparse';
-import { AppErrorExceptionFilter } from '@d-debt/share';
 import { Prisma } from '@prisma/client';
-import { FileInterceptor } from '@nestjs/platform-express';
-// const csv = require('csvtojson');
-import { Express } from 'express';
 
 @Controller('user')
-@UseFilters(AppErrorExceptionFilter)
 export class UserController {
   constructor(private readonly userService: UserService) {}
   @Post()
@@ -46,6 +39,44 @@ export class UserController {
     return this.userService.findUserByID(userid);
   }
 
+  @Post('checkprofile')
+  @UseInterceptors(UserInterceptor)
+  checkprofile(
+    @Req() req,
+    @Body('name') name: string,
+    @Body('email') email: string,
+  ) {
+    const subToken = req.body.sub;
+    return this.userService.checkprofile(subToken, name, email);
+  }
+
+  @Post('createrole')
+  @UseInterceptors(UserInterceptor)
+  createrole(
+    @Body('roleName') roleName: string,
+    @Body('description') description: string,
+  ) {
+    return this.userService.createrole(roleName, description);
+  }
+
+  @Post('shrinkdata')
+  @UseInterceptors(UserInterceptor)
+  shrinkdata(@Req() req, @Body() roles: string[]) {
+    const subToken = req.body.sub;
+    return this.userService.shrinkdata(subToken);
+  }
+
+  @Post('updateprofile')
+  @UseInterceptors(UserInterceptor)
+  updateprofile(
+    @Req() req,
+    @Body('name') name: string,
+    @Body('email') email: string,
+  ) {
+    const subToken = req.body.sub;
+    return this.userService.updateprofile(name, email, subToken);
+  }
+
   @Post('importuser')
   importusers(@Body() data: string[]) {
     return this.userService.importusers(data);
@@ -63,7 +94,6 @@ export class UserController {
 }
 
 @Controller('userparty')
-@UseFilters(AppErrorExceptionFilter)
 export class UserPartyController {
   constructor(private readonly userParty: UserPartyService) {}
   @Post()
@@ -94,7 +124,6 @@ export class UserPartyController {
   }
 }
 @Controller('userattendees')
-@UseFilters(AppErrorExceptionFilter)
 export class UserattendController {
   constructor(
     private readonly userattendeesService: UserattendeesService,
@@ -112,15 +141,27 @@ export class UserattendController {
   async getUserInroomAll() {
     return this.userattendeesService.getUserInroomAll();
   }
-  @Get('courseall')
-  async getCourseAll() {
-    return this.userattendeesService.getCourseAll();
-  }
-
   @Get('groupalls')
   GroupAll() {
     return this.userattendeesService.GroupAll();
   }
+  @Get('courseall')
+  CourseAll() {
+    return this.userattendeesService.CourseAll();
+  }
+
+  @Post('createcourse')
+  Createcourse(@Body() data: Prisma.courseCreateInput) {
+    return {
+      result: this.userattendeesService.Createcourse(data),
+    };
+  }
+
+  @Post('updatecourse')
+  async Updatecourse(@Body() data: Prisma.courseUpdateArgs) {
+    return this.userattendeesService.Updatecourse(data);
+  }
+
   @Post('getstatusprofile')
   async getstatusprofile(
     @Body('roomid') roomid: string,
@@ -206,6 +247,28 @@ export class UserattendController {
   async getuserAll() {
     return await this.userattendeesService.getuserAll();
   }
+  @Post('submituserexternal')
+  async submituserexternal(
+    @Body('roomid') roomid: string,
+    @Body('newuuid') newuuid: string,
+    @Body('username') username: string,
+    @Body('phonenumber') phonenumber: string,
+    @Body('email') email: string,
+    @Body('model') model: string,
+    @Body('course') course: any,
+    @Body('position') position: any,
+  ) {
+    return await this.userattendeesService.submituserexternal(
+      roomid,
+      newuuid,
+      username,
+      phonenumber,
+      email,
+      model,
+      course,
+      position,
+    );
+  }
 
   @Put()
   async update(
@@ -215,6 +278,7 @@ export class UserattendController {
   ) {
     return this.userattendeesService.update(roomid, userid, status);
   }
+
   @Put('updateUserDetail/:roomid/:userid')
   updateUserDetail(
     @Body('data') data: any,
@@ -268,5 +332,9 @@ export class UserattendController {
   @Delete('delete/group/:uuid')
   async DeleteGroup(@Param('uuid') uuid: any) {
     return this.userattendeesService.DeleteGroup(uuid);
+  }
+  @Delete('deletecourse/:uuid')
+  async deletecourse(@Param('uuid') uuid: string) {
+    return this.userattendeesService.deletecourse(uuid);
   }
 }
